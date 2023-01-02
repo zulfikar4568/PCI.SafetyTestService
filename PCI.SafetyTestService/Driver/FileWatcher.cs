@@ -10,9 +10,9 @@ namespace PCI.SafetyTestService.Driver
 {
     class FileWatcher
     {
-        private FileSystemWatcher _watcher;
-        private UseCase.SafetyTest _usecase;
-        public FileWatcher(FileSystemWatcher watcher, UseCase.SafetyTest usecase)
+        private readonly FileSystemWatcher _watcher;
+        private readonly UseCase.ISafetyTest _usecase;
+        public FileWatcher(FileSystemWatcher watcher, UseCase.ISafetyTest usecase)
         {
             _watcher = watcher;
             _usecase = usecase;
@@ -49,13 +49,13 @@ namespace PCI.SafetyTestService.Driver
                 return;
             }
             EventLogUtil.LogEvent($"Changed: {e.FullPath}", System.Diagnostics.EventLogEntryType.Information);
-            _usecase.SomeLogic(e.FullPath);
+            _usecase.SomeLogic(",", e.FullPath);
         }
 
         private void OnCreated(object sender, FileSystemEventArgs e)
         {
             EventLogUtil.LogEvent($"Created: {e.FullPath}", System.Diagnostics.EventLogEntryType.Information);
-            _usecase.SomeLogic(e.FullPath);
+            _usecase.SomeLogic(",", e.FullPath);
         }
 
         private void OnDeleted(object sender, FileSystemEventArgs e)

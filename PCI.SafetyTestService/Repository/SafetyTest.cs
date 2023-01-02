@@ -13,7 +13,11 @@ using System.Threading.Tasks;
 
 namespace PCI.SafetyTestService.Repository
 {
-    public class SafetyTest
+    public interface ISafetyTest
+    {
+        List<Entity.SafetyTest> Reading(string delimiter, string sourceFile);
+    }
+    public class SafetyTest : ISafetyTest
     {
         public List<Entity.SafetyTest> Reading(string delimiter, string sourceFile)
         {

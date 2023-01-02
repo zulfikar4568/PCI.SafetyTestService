@@ -10,7 +10,12 @@ using PCI.SafetyTestService.Util;
 
 namespace PCI.SafetyTestService.Util
 {
-    public class ProcessFile
+    public interface IProcessFile
+    {
+        bool BackupTheFile(string sourceFiles, string destinationFiles);
+        bool MoveTheFile(string sourceFiles, string destinationFiles);
+    }
+    public class ProcessFile  : IProcessFile
     {
         public bool BackupTheFile(string sourceFiles, string destinationFiles)
         {
