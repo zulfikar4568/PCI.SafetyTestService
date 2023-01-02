@@ -15,7 +15,6 @@ namespace PCI.SafetyTestService.Repository
 {
     public class SafetyTest
     {
-
         public List<Entity.SafetyTest> Reading(string delimiter, string sourceFile)
         {
             List<Entity.SafetyTest> result = new List<Entity.SafetyTest>();

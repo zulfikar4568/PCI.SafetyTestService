@@ -13,9 +13,9 @@ namespace PCI.SafetyTestService.Entity
         public string Step { get; set; }
         [Index(1)]
         public string TestType { get; set; }
-        [Index(2)]
+        [Index(6)]
         public string DataResult { get; set; }
-        [Index(3)]
+        [Index(16)]
         public string Serial { get; set; }
         
     }

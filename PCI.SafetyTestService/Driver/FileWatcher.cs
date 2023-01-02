@@ -5,14 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace PCI.SafetyTestService.Util
+namespace PCI.SafetyTestService.Driver
 {
     class FileWatcher
     {
-        public FileSystemWatcher _watcher;
-        public FileWatcher(FileSystemWatcher watcher)
+        private FileSystemWatcher _watcher;
+        private UseCase.SafetyTest _usecase;
+        public FileWatcher(FileSystemWatcher watcher, UseCase.SafetyTest usecase)
         {
             _watcher = watcher;
+            _usecase = usecase;
         }
         public void Init()
         {
@@ -37,33 +39,30 @@ namespace PCI.SafetyTestService.Util
             Console.WriteLine("Press enter to exit.");
             Console.ReadLine();
         }
-        private static void OnChanged(object sender, FileSystemEventArgs e)
+        private void OnChanged(object sender, FileSystemEventArgs e)
         {
             if (e.ChangeType != WatcherChangeTypes.Changed)
             {
                 return;
             }
             Console.WriteLine($"Changed: {e.FullPath}");
-            string text = File.ReadAllText(e.FullPath);
-            Console.WriteLine(text);
+            _usecase.SomeLogic(e.FullPath);
         }
 
-        private static void OnCreated(object sender, FileSystemEventArgs e)
+        private void OnCreated(object sender, FileSystemEventArgs e)
         {
             string value = $"Created: {e.FullPath}";
             Console.WriteLine(value);
-            string text = File.ReadAllText(e.FullPath);
-            Console.WriteLine(text);
+            _usecase.SomeLogic(e.FullPath);
         }
 
-        private static void OnDeleted(object sender, FileSystemEventArgs e)
+        private void OnDeleted(object sender, FileSystemEventArgs e)
         {
             Console.WriteLine($"Deleted: {e.FullPath}");
-            string text = File.ReadAllText(e.FullPath);
-            Console.WriteLine(text);
+            _usecase.SomeLogic(e.FullPath);
         }
 
-        private static void OnRenamed(object sender, RenamedEventArgs e)
+        private void OnRenamed(object sender, RenamedEventArgs e)
         {
             Console.WriteLine($"Renamed:");
             Console.WriteLine($"    Old: {e.OldFullPath}");
@@ -72,10 +71,10 @@ namespace PCI.SafetyTestService.Util
             Console.WriteLine(text);
         }
 
-        private static void OnError(object sender, ErrorEventArgs e) =>
+        private void OnError(object sender, ErrorEventArgs e) =>
             PrintException(e.GetException());
 
-        private static void PrintException(Exception ex)
+        private void PrintException(Exception ex)
         {
             if (ex != null)
             {

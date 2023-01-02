@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using PCI.SafetyTestService.Util;
+using PCI.SafetyTestService.Driver;
 using PCI.SafetyTestService.Config;
+using PCI.SafetyTestService.Util;
 
 namespace PCI.SafetyTestService
 {
@@ -13,12 +14,13 @@ namespace PCI.SafetyTestService
     {
         public static void Initialization()
         {
-            AppSettings.AssemblyName = "1" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+            AppSettings.AssemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+            EventLogUtil.LogEvent("Running The Application", System.Diagnostics.EventLogEntryType.Information, 3);
         }
-        static void Main(string[] args)
+        static void Main(string[] _)
         {
             Initialization();
-            FileWatcher myWatcher = new FileWatcher(new FileSystemWatcher(@"C:\Temp\Logs"));
+            FileWatcher myWatcher = new FileWatcher(new FileSystemWatcher(AppSettings.SourceFolder), new UseCase.SafetyTest(new Repository.SafetyTest(), ","));
             myWatcher.Init();
         }
     }

@@ -71,7 +71,8 @@
   <ItemGroup>
     <Compile Include="Config\AppSettings.cs" />
     <Compile Include="Repository\SafetyTest.cs" />
-    <Compile Include="Util\FileWatcher.cs" />
+    <Compile Include="UseCase\SafetyTest.cs" />
+    <Compile Include="Driver\FileWatcher.cs" />
     <Compile Include="Util\ProcessFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
