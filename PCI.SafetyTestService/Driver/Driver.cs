@@ -11,7 +11,7 @@ namespace PCI.SafetyTestService.Driver
     {
         protected override void Load(ContainerBuilder moduleBuilder)
         {
-            moduleBuilder.RegisterType<FileWatcher>().AsSelf();
+            moduleBuilder.RegisterType<FileWatcher>().As<IFileWatcher>();
         }
     }
 }

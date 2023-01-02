@@ -11,7 +11,7 @@ namespace PCI.SafetyTestService
 {
     public class StreamFile
     {
-        private readonly Driver.FileWatcher _watcher;
+        private readonly Driver.IFileWatcher _watcher;
         public StreamFile()
         {
             var containerBuilder = new ContainerBuilder();
@@ -23,7 +23,7 @@ namespace PCI.SafetyTestService
 
             var container = containerBuilder.Build();
 
-            _watcher = container.Resolve<Driver.FileWatcher>();
+            _watcher = container.Resolve<Driver.IFileWatcher>();
         }
 
         public void Start()

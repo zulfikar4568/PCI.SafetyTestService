@@ -8,7 +8,12 @@ using PCI.SafetyTestService.Util;
 
 namespace PCI.SafetyTestService.Driver
 {
-    class FileWatcher
+    public interface IFileWatcher
+    {
+        void Init();
+        void Exit();
+    }
+    class FileWatcher : IFileWatcher
     {
         private readonly FileSystemWatcher _watcher;
         private readonly UseCase.ISafetyTest _usecase;
