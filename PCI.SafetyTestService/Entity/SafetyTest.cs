@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using CsvHelper.Configuration.Attributes;
 
-namespace PCI.SafetyTestService
+namespace PCI.SafetyTestService.Entity
 {
-    public class SafetyTestFormat
+    public class SafetyTest
     {
         [Index(0)]
         public string Step { get; set; }

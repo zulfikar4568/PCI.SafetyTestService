@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using PCI.SafetyTestService.Config;
 using PCI.SafetyTestService.Util;
 
-namespace PCI.SafetyTestService
+namespace PCI.SafetyTestService.Util
 {
     public class ProcessFile
     {
