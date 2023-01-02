@@ -55,7 +55,6 @@ namespace PCI.SafetyTestService.Driver
         private void OnCreated(object sender, FileSystemEventArgs e)
         {
             EventLogUtil.LogEvent($"Created: {e.FullPath}", System.Diagnostics.EventLogEntryType.Information);
-            _usecase.SomeLogic(",", e.FullPath);
         }
 
         private void OnDeleted(object sender, FileSystemEventArgs e)

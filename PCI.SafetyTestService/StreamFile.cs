@@ -15,11 +15,11 @@ namespace PCI.SafetyTestService
         public StreamFile()
         {
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterType<UseCase.SafetyTest>().As<UseCase.ISafetyTest>();
-            containerBuilder.RegisterType<Repository.SafetyTest>().As<Repository.ISafetyTest>();
-            containerBuilder.RegisterType<Util.ProcessFile>().As<Util.IProcessFile>();
+            containerBuilder.RegisterModule(new Driver.Driver());
+            containerBuilder.RegisterModule(new Repository.Repository());
+            containerBuilder.RegisterModule(new UseCase.UseCase());
+            containerBuilder.RegisterModule(new Util.Util());
             containerBuilder.RegisterInstance(new FileSystemWatcher(AppSettings.SourceFolder)).AsSelf();
-            containerBuilder.RegisterType<Driver.FileWatcher>().AsSelf();
 
             var container = containerBuilder.Build();
 
