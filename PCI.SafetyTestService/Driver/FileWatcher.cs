@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using PCI.SafetyTestService.Util;
 
 namespace PCI.SafetyTestService.Driver
 {
@@ -35,9 +36,11 @@ namespace PCI.SafetyTestService.Driver
             _watcher.Filter = "*.csv";
             _watcher.IncludeSubdirectories = true;
             _watcher.EnableRaisingEvents = true;
-
-            Console.WriteLine("Press enter to exit.");
-            Console.ReadLine();
+        }
+        public void Exit()
+        {
+            _watcher.EnableRaisingEvents = false;
+            _watcher.Dispose();
         }
         private void OnChanged(object sender, FileSystemEventArgs e)
         {
@@ -45,30 +48,24 @@ namespace PCI.SafetyTestService.Driver
             {
                 return;
             }
-            Console.WriteLine($"Changed: {e.FullPath}");
+            EventLogUtil.LogEvent($"Changed: {e.FullPath}", System.Diagnostics.EventLogEntryType.Information);
             _usecase.SomeLogic(e.FullPath);
         }
 
         private void OnCreated(object sender, FileSystemEventArgs e)
         {
-            string value = $"Created: {e.FullPath}";
-            Console.WriteLine(value);
+            EventLogUtil.LogEvent($"Created: {e.FullPath}", System.Diagnostics.EventLogEntryType.Information);
             _usecase.SomeLogic(e.FullPath);
         }
 
         private void OnDeleted(object sender, FileSystemEventArgs e)
         {
-            Console.WriteLine($"Deleted: {e.FullPath}");
-            _usecase.SomeLogic(e.FullPath);
+            EventLogUtil.LogEvent($"Deleted: {e.FullPath}", System.Diagnostics.EventLogEntryType.Information);
         }
 
         private void OnRenamed(object sender, RenamedEventArgs e)
         {
-            Console.WriteLine($"Renamed:");
-            Console.WriteLine($"    Old: {e.OldFullPath}");
-            Console.WriteLine($"    New: {e.FullPath}");
-            string text = File.ReadAllText(e.FullPath);
-            Console.WriteLine(text);
+            EventLogUtil.LogEvent($"Renamed: \n Old: {e.OldFullPath} \n New: {e.FullPath}", System.Diagnostics.EventLogEntryType.Information);
         }
 
         private void OnError(object sender, ErrorEventArgs e) =>
