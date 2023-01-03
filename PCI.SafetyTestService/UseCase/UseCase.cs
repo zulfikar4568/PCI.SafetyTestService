@@ -12,6 +12,7 @@ namespace PCI.SafetyTestService.UseCase
         protected override void Load(ContainerBuilder moduleBuilder)
         {
             moduleBuilder.RegisterType<SafetyTest>().As<ISafetyTest>();
+            moduleBuilder.RegisterType<DailyCheck>().As<IDailyCheck>();
         }
     }
 }

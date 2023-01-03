@@ -10,18 +10,33 @@ namespace PCI.SafetyTestService.Config
     public static class AppSettings
     {
         public static string AssemblyName { get; set; }
-        public static string SourceFolder
+        public static string SourceFolderSafetyTest
         {
             get
             {
-                return ConfigurationManager.AppSettings["SourceFolder"];
+                return ConfigurationManager.AppSettings["SourceFolderSafetyTest"];
             }
         }
-        public static string TargetFolder
+        public static string TargetFolderSafetyTest
         {
             get
             {
-                return ConfigurationManager.AppSettings["TargetFolder"];
+                return ConfigurationManager.AppSettings["TargetFolderSafetyTest"];
+            }
+        }
+
+        public static string SourceFolderDailyCheck
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["SourceFolderDailyCheck"];
+            }
+        }
+        public static string TargetFolderDailyCheck
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["TargetFolderDailyCheck"];
             }
         }
     }

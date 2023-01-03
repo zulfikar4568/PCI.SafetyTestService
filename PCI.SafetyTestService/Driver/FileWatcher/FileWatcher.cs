@@ -5,26 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using PCI.SafetyTestService.Util;
+using PCI.SafetyTestService.Driver.FileWatcherInstance;
 
 namespace PCI.SafetyTestService.Driver
 {
-    public interface IFileWatcher
+    public interface IFileWatcher<T, F>
     {
         void Init();
         void Exit();
     }
-    class FileWatcher : IFileWatcher
+    class FileWatcher<T, F> : IFileWatcher<T, F> where T : UseCase.Abstraction.IUseCase where F : BaseFileWatcherInstance
     {
-        private readonly FileSystemWatcher _watcher;
-        private readonly UseCase.ISafetyTest _usecase;
-        public FileWatcher(FileSystemWatcher watcher, UseCase.ISafetyTest usecase)
+        private readonly F _watcher;
+        private readonly T _usecase;
+
+        public FileWatcher(F watcher, T usecase)
         {
             _watcher = watcher;
             _usecase = usecase;
         }
         public void Init()
         {
-            _watcher.NotifyFilter = NotifyFilters.Attributes
+            _watcher.Instance.NotifyFilter = NotifyFilters.Attributes
                                  | NotifyFilters.CreationTime
                                  | NotifyFilters.DirectoryName
                                  | NotifyFilters.FileName
@@ -32,20 +34,20 @@ namespace PCI.SafetyTestService.Driver
                                  | NotifyFilters.LastWrite
                                  | NotifyFilters.Security
                                  | NotifyFilters.Size;
-            _watcher.Changed += OnChanged;
-            _watcher.Created += OnCreated;
-            _watcher.Deleted += OnDeleted;
-            _watcher.Renamed += OnRenamed;
-            _watcher.Error += OnError;
+            _watcher.Instance.Changed += OnChanged;
+            _watcher.Instance.Created += OnCreated;
+            _watcher.Instance.Deleted += OnDeleted;
+            _watcher.Instance.Renamed += OnRenamed;
+            _watcher.Instance.Error += OnError;
 
-            _watcher.Filter = "*.csv";
-            _watcher.IncludeSubdirectories = true;
-            _watcher.EnableRaisingEvents = true;
+            _watcher.Instance.Filter = "*.csv";
+            _watcher.Instance.IncludeSubdirectories = true;
+            _watcher.Instance.EnableRaisingEvents = true;
         }
         public void Exit()
         {
-            _watcher.EnableRaisingEvents = false;
-            _watcher.Dispose();
+            _watcher.Instance.EnableRaisingEvents = false;
+            _watcher.Instance.Dispose();
         }
         private void OnChanged(object sender, FileSystemEventArgs e)
         {
@@ -53,8 +55,9 @@ namespace PCI.SafetyTestService.Driver
             {
                 return;
             }
+            Console.WriteLine($"Changed: {e.FullPath}");
             EventLogUtil.LogEvent($"Changed: {e.FullPath}", System.Diagnostics.EventLogEntryType.Information);
-            _usecase.SomeLogic(",", e.FullPath);
+            _usecase.MainLogic(",", e.FullPath);
         }
 
         private void OnCreated(object sender, FileSystemEventArgs e)
