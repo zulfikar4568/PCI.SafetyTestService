@@ -8,10 +8,11 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>PCI.SafetyTestService</RootNamespace>
     <AssemblyName>PCI.SafetyTestService</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,8 +37,23 @@
     <Reference Include="Autofac, Version=6.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.6.5.0\lib\netstandard2.0\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Camstar.Exceptions">
+      <HintPath>..\Camstar\Camstar.Exceptions.dll</HintPath>
+    </Reference>
+    <Reference Include="Camstar.Util">
+      <HintPath>..\Camstar\Camstar.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="Camstar.WCFClient">
+      <HintPath>..\Camstar\Camstar.WCFClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Camstar.WCFClientBase">
+      <HintPath>..\Camstar\Camstar.WCFClientBase.dll</HintPath>
+    </Reference>
     <Reference Include="CsvHelper, Version=30.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
       <HintPath>..\packages\CsvHelper.30.0.1\lib\net47\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="InSiteXMLClient">
+      <HintPath>..\Camstar\InSiteXMLClient.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -100,16 +116,24 @@
     <Compile Include="UseCase\SafetyTest\SafetyTest.cs" />
     <Compile Include="Driver\FileWatcher\FileWatcher.cs" />
     <Compile Include="UseCase\UseCase.cs" />
+    <Compile Include="Util\Opcenter\ContainerTransactionUtil.cs" />
+    <Compile Include="Util\Opcenter\HelperUtil.cs" />
+    <Compile Include="Util\Logging.cs" />
+    <Compile Include="Util\Opcenter\Opcenter.cs" />
     <Compile Include="Util\ProcessFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entity\SafetyTest.cs" />
     <Compile Include="Util\EventLogUtil.cs" />
     <Compile Include="Util\NetUtil.cs" />
+    <Compile Include="Util\Simple3Des.cs" />
     <Compile Include="Util\Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Endpoints.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

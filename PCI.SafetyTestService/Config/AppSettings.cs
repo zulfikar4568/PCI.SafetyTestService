@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Camstar.WCF.ObjectStack;
+using PCI.SafetyTestService.Util;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -39,5 +41,72 @@ namespace PCI.SafetyTestService.Config
                 return ConfigurationManager.AppSettings["TargetFolderDailyCheck"];
             }
         }
+        #region TIME
+        public static TimeSpan UTCOffset
+        {
+            get
+            {
+                string sUTCOffset = ConfigurationManager.AppSettings["UTCOffset"];
+                string[] aUTCOffset = sUTCOffset.Split(':');
+                return new TimeSpan(Int32.Parse(aUTCOffset[0]), Int32.Parse(aUTCOffset[1]), Int32.Parse(aUTCOffset[2]));
+            }
+        }
+        public static ulong TimerPollingInterval
+        {
+            get
+            {
+                return Convert.ToUInt64(ConfigurationManager.AppSettings["TimerPollingInterval"]);
+            }
+        }
+        #endregion
+
+        #region CONFIG ACCOUNT ExCore
+        private static string ExCoreHost
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["ExCoreHost"];
+            }
+        }
+        private static string ExCorePort
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["ExCorePort"];
+            }
+        }
+        private static string ExCoreUsername
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["ExCoreUsername"];
+            }
+        }
+        private static string ExCorePassword
+        {
+            get
+            {
+
+                Simple3Des oSimple3Des = new Simple3Des(ConfigurationManager.AppSettings["ExCorePasswordKey"]);
+                return oSimple3Des.DecryptData(ConfigurationManager.AppSettings["ExCorePassword"]);
+            }
+        }
+        private static UserProfile _ExCoreUserProfile = null;
+        public static UserProfile ExCoreUserProfile
+        {
+            get
+            {
+                if (_ExCoreUserProfile == null)
+                {
+                    _ExCoreUserProfile = new UserProfile(ExCoreUsername, ExCorePassword, UTCOffset);
+                }
+                if (_ExCoreUserProfile.Name != ExCoreUsername || _ExCoreUserProfile.Password.Value != ExCorePassword)
+                {
+                    _ExCoreUserProfile = new UserProfile(ExCoreUsername, ExCorePassword, UTCOffset);
+                }
+                return _ExCoreUserProfile;
+            }
+        }
+        #endregion
     }
 }

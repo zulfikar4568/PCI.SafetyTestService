@@ -20,6 +20,7 @@ namespace PCI.SafetyTestService
             containerBuilder.RegisterModule(new Repository.Repository());
             containerBuilder.RegisterModule(new UseCase.UseCase());
             containerBuilder.RegisterModule(new Util.Util());
+            containerBuilder.RegisterModule(new Util.Opcenter.Opcenter());
 
             var container = containerBuilder.Build();
 
