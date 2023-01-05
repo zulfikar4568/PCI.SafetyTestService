@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PCI.SafetyTestService.Config;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,11 +25,23 @@ namespace PCI.SafetyTestService.UseCase
         public void MainLogic(string delimiter, string sourceFile)
         {
             List<Entity.DailyCheck> data = _repository.Reading(delimiter, sourceFile);
+            Hashtable dataCollection = new Hashtable();
             foreach (var item in data)
             {
-                Console.WriteLine($"{item.Step} {item.TestType} - {item.DataResult} - {item.Serial}");
+                dataCollection[item.Step] = $"{item.TestType} - {item.DataResult}";
             }
+
+            foreach (DictionaryEntry dat in dataCollection)
+            {
+                Console.WriteLine("Key: {0}, Value: {1}", dat.Key, dat.Value);
+            }
+
+            MovingFile(System.IO.Path.GetFileName(sourceFile));
+        }
+
+        private void MovingFile(string fileName)
+        {
+            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.TargetFolderSafetyTest}\\{fileName}");
         }
     }
-
 }
