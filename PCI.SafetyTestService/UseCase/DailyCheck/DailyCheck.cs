@@ -36,12 +36,14 @@ namespace PCI.SafetyTestService.UseCase
                 Console.WriteLine("Key: {0}, Value: {1}", dat.Key, dat.Value);
             }
 
+            // Logic Opcenter must be in here
+            dataCollection.Clear();
             MovingFile(System.IO.Path.GetFileName(sourceFile));
         }
 
         private void MovingFile(string fileName)
         {
-            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.TargetFolderSafetyTest}\\{fileName}");
+            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.TargetFolderSafetyTest}\\[{DateTime.Now:MMddyyyyhhmmsstt}]_{fileName}");
         }
     }
 }

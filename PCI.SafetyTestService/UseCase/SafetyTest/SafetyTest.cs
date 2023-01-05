@@ -37,20 +37,26 @@ namespace PCI.SafetyTestService.UseCase
                     dataCollection[item.Step] = $"{item.TestType} - {item.DataResult}";
                 }
             }
-            Entity.SafetyTest groundMax = groundTest.OrderByDescending((x) => x.DataResult).First();
-            dataCollection[groundMax.Step] = $"{groundMax.TestType} - {groundMax.DataResult}";
+            if (groundTest.Count != 0)
+            { 
+                Entity.SafetyTest groundMax = groundTest.OrderByDescending((x) => x.DataResult).First();
+                if (groundMax != null) dataCollection[groundMax.Step] = $"{groundMax.TestType} - {groundMax.DataResult}";
+            }
+            
 
             foreach (DictionaryEntry dat in dataCollection)
             {
                 Console.WriteLine("Key: {0}, Value: {1}", dat.Key, dat.Value);
             }
 
+            // Logic Opcenter must be in here
+            dataCollection.Clear();
             MovingFile(System.IO.Path.GetFileName(sourceFile));
         }
 
         private void MovingFile(string fileName)
         {
-            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.TargetFolderSafetyTest}\\{fileName}");
+            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.TargetFolderSafetyTest}\\[{DateTime.Now:MMddyyyyhhmmsstt}]_{fileName}");
         }
     }
 }
