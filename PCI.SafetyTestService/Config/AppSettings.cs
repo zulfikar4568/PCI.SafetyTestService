@@ -12,6 +12,8 @@ namespace PCI.SafetyTestService.Config
     public static class AppSettings
     {
         public static string AssemblyName { get; set; }
+
+        #region SOURCE_FOLDER
         public static string SourceFolderSafetyTest
         {
             get
@@ -24,6 +26,13 @@ namespace PCI.SafetyTestService.Config
             get
             {
                 return ConfigurationManager.AppSettings["TargetFolderSafetyTest"];
+            }
+        }
+        public static string FailedFolderSafetyTest
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["FailedFolderSafetyTest"];
             }
         }
 
@@ -41,6 +50,16 @@ namespace PCI.SafetyTestService.Config
                 return ConfigurationManager.AppSettings["TargetFolderDailyCheck"];
             }
         }
+        public static string FailedFolderDailyCheck
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["FailedFolderDailyCheck"];
+            }
+        }
+
+        #endregion
+
         #region TIME
         public static TimeSpan UTCOffset
         {
