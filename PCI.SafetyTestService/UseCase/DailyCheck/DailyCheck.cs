@@ -14,8 +14,8 @@ namespace PCI.SafetyTestService.UseCase
     }
     public class DailyCheck : IDailyCheck
     {
-        private Repository.IDailyCheck _repository;
-        private Util.IProcessFile _processFile;
+        private readonly Repository.IDailyCheck _repository;
+        private readonly Util.IProcessFile _processFile;
         public DailyCheck(Repository.IDailyCheck repository, Util.IProcessFile processFile)
         {
             _repository = repository;

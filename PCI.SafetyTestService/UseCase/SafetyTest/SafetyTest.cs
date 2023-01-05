@@ -14,8 +14,8 @@ namespace PCI.SafetyTestService.UseCase
     }
     public class SafetyTest : ISafetyTest
     {
-        private Repository.ISafetyTest _repository;
-        private Util.IProcessFile _processFile;
+        private readonly Repository.ISafetyTest _repository;
+        private readonly Util.IProcessFile _processFile;
         public SafetyTest(Repository.ISafetyTest repository, Util.IProcessFile processFile)
         {
             _repository = repository;
