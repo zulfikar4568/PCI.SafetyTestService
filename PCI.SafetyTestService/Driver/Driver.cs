@@ -17,6 +17,10 @@ namespace PCI.SafetyTestService.Driver
 
             moduleBuilder.RegisterType<FileWatcher<UseCase.ISafetyTest, FileWatcherInstance.SafetyTestFileWatcherInstance>>().As<IFileWatcher<UseCase.ISafetyTest, FileWatcherInstance.SafetyTestFileWatcherInstance>>();
             moduleBuilder.RegisterType<FileWatcher<UseCase.IDailyCheck, FileWatcherInstance.DailyCheckFileWatcherInstance>>().As<IFileWatcher<UseCase.IDailyCheck, FileWatcherInstance.DailyCheckFileWatcherInstance>>();
+
+
+            moduleBuilder.RegisterType<Opcenter.Helper>().AsSelf();
+            moduleBuilder.RegisterType<Opcenter.ContainerTransaction>().AsSelf();
         }
     }
 }

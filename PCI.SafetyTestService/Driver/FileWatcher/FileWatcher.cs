@@ -55,7 +55,9 @@ namespace PCI.SafetyTestService.Driver
             {
                 return;
             }
-            Console.WriteLine($"Changed: {e.FullPath}");
+            #if DEBUG
+                Console.WriteLine($"Changed: {e.FullPath}");
+            #endif
             EventLogUtil.LogEvent($"Changed: {e.FullPath}", System.Diagnostics.EventLogEntryType.Information);
             _usecase.MainLogic(",", e.FullPath);
         }
