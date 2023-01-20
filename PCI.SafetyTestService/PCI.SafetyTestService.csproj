@@ -113,7 +113,7 @@
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\DailyCheck\DailyCheck.cs" />
     <Compile Include="Repository\SafetyTest\SafetyTest.cs" />
-    <Compile Include="StreamFile.cs" />
+    <Compile Include="ServiceMain.cs" />
     <Compile Include="UseCase\Abstraction\UseCase.cs" />
     <Compile Include="UseCase\DailyCheck\DailyCheck.cs" />
     <Compile Include="UseCase\SafetyTest\SafetyTest.cs" />

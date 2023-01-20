@@ -14,7 +14,7 @@ namespace PCI.SafetyTestService.Driver
         void Init();
         void Exit();
     }
-    class FileWatcher<T, F> : IFileWatcher<T, F> where T : UseCase.Abstraction.IUseCase where F : BaseFileWatcherInstance
+    public class FileWatcher<T, F> : IFileWatcher<T, F> where T : UseCase.Abstraction.IUseCase where F : BaseFileWatcherInstance
     {
         private readonly F _watcher;
         private readonly T _usecase;

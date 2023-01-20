@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PCI.SafetyTestService.Driver.FileWatcherInstance
 {
-    class DailyCheckFileWatcherInstance : BaseFileWatcherInstance
+    public class DailyCheckFileWatcherInstance : BaseFileWatcherInstance
     {
         public DailyCheckFileWatcherInstance(string path)
         {
