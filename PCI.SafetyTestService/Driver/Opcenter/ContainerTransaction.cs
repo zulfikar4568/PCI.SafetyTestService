@@ -80,6 +80,35 @@ namespace PCI.SafetyTestService.Driver.Opcenter
                 if (!(Service is null)) Service.Close();
             }
         }
+        public bool CollectDataTxn(CollectData ServiceObject, CollectDataService Service, bool IgnoreException = true)
+        {
+            string TxnId = Guid.NewGuid().ToString();
+            try
+            {
+                string sMessage = "";
+                CollectData oServiceObject = null;
+                ResultStatus oResultStatus = null;
+                EventLogUtil.LogEvent(Logging.LoggingContainer(ServiceObject.Container.Name, TxnId, "Setting input data for Collect Data ..."), System.Diagnostics.EventLogEntryType.Information, 2);
+                oServiceObject = ServiceObject;
+
+                EventLogUtil.LogEvent(Logging.LoggingContainer(ServiceObject.Container.Name, TxnId, "Execution Collect Data ...."), System.Diagnostics.EventLogEntryType.Information, 2);
+                oResultStatus = Service.ExecuteTransaction(oServiceObject);
+                bool statusMoveStd = _helper.ProcessResult(oResultStatus, ref sMessage, false);
+                EventLogUtil.LogEvent(Logging.LoggingContainer(ServiceObject.Container.Name, TxnId, sMessage), System.Diagnostics.EventLogEntryType.Information, 2);
+                return statusMoveStd;
+            }
+            catch (Exception ex)
+            {
+                ex.Source = AppSettings.AssemblyName == ex.Source ? MethodBase.GetCurrentMethod().Name : MethodBase.GetCurrentMethod().Name + "." + ex.Source;
+                EventLogUtil.LogErrorEvent(Logging.LoggingContainer(ServiceObject.Container.Name, TxnId, ex.Source), ex);
+                if (!IgnoreException) throw ex;
+                return false;
+            }
+            finally
+            {
+                if (!(Service is null)) Service.Close();
+            }
+        }
         public ViewContainerStatus ContainerInfo(ViewContainerStatus_Info ContainerInfo, string ContainerName, bool IgnoreException = true)
         {
             string TxnId = Guid.NewGuid().ToString();
