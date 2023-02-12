@@ -21,6 +21,7 @@ namespace PCI.SafetyTestService.Driver
 
             moduleBuilder.RegisterType<Opcenter.Helper>().AsSelf();
             moduleBuilder.RegisterType<Opcenter.ContainerTransaction>().AsSelf();
+            moduleBuilder.RegisterType<Opcenter.MaintenanceTransaction>().AsSelf();
         }
     }
 }

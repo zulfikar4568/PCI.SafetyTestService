@@ -15,6 +15,7 @@ namespace PCI.SafetyTestService.Repository
             moduleBuilder.RegisterType<DailyCheck>().As<IDailyCheck>();
 
             moduleBuilder.RegisterType<Opcenter.ContainerTransaction>().AsSelf();
+            moduleBuilder.RegisterType<Opcenter.MaintenanceTransaction>().AsSelf();
         }
     }
 }

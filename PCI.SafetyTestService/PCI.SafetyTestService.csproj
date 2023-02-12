@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=6.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.6.5.0\lib\netstandard2.0\Autofac.dll</HintPath>
@@ -108,8 +111,10 @@
     <Compile Include="Driver\FileWatcherInstance\SafetyTestFileWatcherInstance.cs" />
     <Compile Include="Driver\Opcenter\ContainerTransaction.cs" />
     <Compile Include="Driver\Opcenter\Helper.cs" />
+    <Compile Include="Driver\Opcenter\MaintenanceTransaction.cs" />
     <Compile Include="Entity\DailyCheck.cs" />
     <Compile Include="Repository\Opcenter\ContainerTransaction.cs" />
+    <Compile Include="Repository\Opcenter\MaintenanceTransaction.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\DailyCheck\DailyCheck.cs" />
     <Compile Include="Repository\SafetyTest\SafetyTest.cs" />
@@ -131,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="app.manifest" />
     <None Include="Endpoints.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
