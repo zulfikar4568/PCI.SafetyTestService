@@ -127,5 +127,22 @@ namespace PCI.SafetyTestService.Config
             }
         }
         #endregion
+
+        #region MODELLING METADATA
+        public static string UserDataCollectionSafetyTestName
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["UserDataCollectionSafetyTestName"];
+            }
+        }
+        public static string UserDataCollectionSafetyTestRevision
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["UserDataCollectionSafetyTestRevision"];
+            }
+        }
+        #endregion
     }
 }

@@ -1,6 +1,9 @@
-﻿using CsvHelper;
+﻿using Camstar.WCF.ObjectStack;
+using CsvHelper;
 using CsvHelper.Configuration;
 using PCI.SafetyTestService.Config;
+using PCI.SafetyTestService.Entity;
+using PCI.SafetyTestService.Repository.Opcenter;
 using PCI.SafetyTestService.Util;
 using System;
 using System.Collections.Generic;
@@ -16,9 +19,15 @@ namespace PCI.SafetyTestService.Repository
     public interface ISafetyTest
     {
         List<Entity.SafetyTest> Reading(string delimiter, string sourceFile);
+        DataPointDetails[] GetDataCollectionList();
     }
     public class SafetyTest : ISafetyTest
     {
+        private readonly MaintenanceTransaction _maintenanceTransaction;
+        public SafetyTest(MaintenanceTransaction maintenanceTransaction) 
+        {
+            _maintenanceTransaction = maintenanceTransaction;
+        }
         public List<Entity.SafetyTest> Reading(string delimiter, string sourceFile)
         {
             List<Entity.SafetyTest> result = new List<Entity.SafetyTest>();
@@ -45,6 +54,17 @@ namespace PCI.SafetyTestService.Repository
             }
 
             return result;
+        }
+
+        public DataPointDetails[] GetDataCollectionList()
+        {
+            List<DataPointDetails> result = new List<DataPointDetails>();
+            var data = _maintenanceTransaction.GetUserDataCollectionDef(AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision);
+            foreach (var dataPoint in data.DataPoints)
+            {
+                result.Add(new DataPointDetails() { DataName = dataPoint.Name.ToString() , DataType = dataPoint.DataType});
+            }
+            return result.ToArray();
         }
     }
 }
