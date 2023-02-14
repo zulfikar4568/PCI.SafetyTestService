@@ -1,6 +1,8 @@
-﻿using CsvHelper;
+﻿using Camstar.WCF.ObjectStack;
+using CsvHelper;
 using CsvHelper.Configuration;
 using PCI.SafetyTestService.Config;
+using PCI.SafetyTestService.Repository.Opcenter;
 using PCI.SafetyTestService.Util;
 using System;
 using System.Collections.Generic;
@@ -16,9 +18,15 @@ namespace PCI.SafetyTestService.Repository
     public interface IDailyCheck
     {
         List<Entity.DailyCheck> Reading(string delimiter, string sourceFile);
+        DataPointDetails[] GetDataCollectionList();
     }
     public class DailyCheck : IDailyCheck
     {
+        private readonly MaintenanceTransaction _maintenanceTransaction;
+        public DailyCheck(MaintenanceTransaction maintenanceTransaction)
+        {
+            _maintenanceTransaction = maintenanceTransaction;
+        }
         public List<Entity.DailyCheck> Reading(string delimiter, string sourceFile)
         {
             List<Entity.DailyCheck> result = new List<Entity.DailyCheck>();
@@ -44,6 +52,17 @@ namespace PCI.SafetyTestService.Repository
                 EventLogUtil.LogErrorEvent(ex.Source, ex);
             }
             return result;
+        }
+
+        public DataPointDetails[] GetDataCollectionList()
+        {
+            List<DataPointDetails> result = new List<DataPointDetails>();
+            var data = _maintenanceTransaction.GetUserDataCollectionDef(AppSettings.UserDataCollectionDailyCheckName, AppSettings.UserDataCollectionDailyCheckRevision);
+            foreach (var dataPoint in data.DataPoints)
+            {
+                result.Add(new DataPointDetails() { DataName = dataPoint.Name.ToString(), DataType = dataPoint.DataType });
+            }
+            return result.ToArray();
         }
     }
 }

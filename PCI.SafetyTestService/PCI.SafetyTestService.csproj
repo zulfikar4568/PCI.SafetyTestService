@@ -112,9 +112,11 @@
     <Compile Include="Driver\Opcenter\ContainerTransaction.cs" />
     <Compile Include="Driver\Opcenter\Helper.cs" />
     <Compile Include="Driver\Opcenter\MaintenanceTransaction.cs" />
+    <Compile Include="Driver\Opcenter\ResourceTransaction.cs" />
     <Compile Include="Entity\DailyCheck.cs" />
     <Compile Include="Repository\Opcenter\ContainerTransaction.cs" />
     <Compile Include="Repository\Opcenter\MaintenanceTransaction.cs" />
+    <Compile Include="Repository\Opcenter\ResourceTransaction.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\DailyCheck\DailyCheck.cs" />
     <Compile Include="Repository\SafetyTest\SafetyTest.cs" />

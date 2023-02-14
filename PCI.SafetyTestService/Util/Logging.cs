@@ -12,5 +12,9 @@ namespace PCI.SafetyTestService.Util
         {
             return $"Container: {Container}, LogId: {TxnId}, Message: {Message}";
         }
+        internal static string LoggingResource(string Resource, string TxnId, string Message = "")
+        {
+            return $"Resource: {Resource}, LogId: {TxnId}, Message: {Message}";
+        }
     }
 }

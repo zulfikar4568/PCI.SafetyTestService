@@ -16,6 +16,7 @@ namespace PCI.SafetyTestService.Repository
 
             moduleBuilder.RegisterType<Opcenter.ContainerTransaction>().AsSelf();
             moduleBuilder.RegisterType<Opcenter.MaintenanceTransaction>().AsSelf();
+            moduleBuilder.RegisterType<Opcenter.ResourceTransaction>().AsSelf();
         }
     }
 }

@@ -143,6 +143,27 @@ namespace PCI.SafetyTestService.Config
                 return ConfigurationManager.AppSettings["UserDataCollectionSafetyTestRevision"];
             }
         }
+        public static string ResourceName
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["ResourceName"];
+            }
+        }
+        public static string UserDataCollectionDailyCheckName
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["UserDataCollectionDailyCheckName"];
+            }
+        }
+        public static string UserDataCollectionDailyCheckRevision
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["UserDataCollectionDailyCheckRevision"];
+            }
+        }
         #endregion
     }
 }
