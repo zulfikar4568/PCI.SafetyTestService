@@ -25,7 +25,7 @@ namespace PCI.SafetyTestService.Util
 
             foreach (EventLog oEventLog in EventLog.GetEventLogs())
             {
-                if (sEventLog.Substring(0, 3).ToUpper() == oEventLog.Log.Substring(0, 3).ToUpper())
+                if (sEventLog.ToUpper() == oEventLog.Log.ToUpper())
                 {
                     sEventLog = oEventLog.Log;
                     break;

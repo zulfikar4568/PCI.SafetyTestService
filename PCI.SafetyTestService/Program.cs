@@ -26,7 +26,6 @@ namespace PCI.SafetyTestService
             #endif
             var exitCode = HostFactory.Run(x =>
             {
-                AppSettings.AssemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
                 x.Service<ServiceMain>(s =>
                 {
                     s.ConstructUsing(service => container.Resolve<ServiceMain>());
