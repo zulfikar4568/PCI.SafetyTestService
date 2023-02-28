@@ -1,4 +1,9 @@
-<h1 align="center">Safety Test Service</h1>
+<h1 align="center">
+  Safety Test Service </br>
+  <img src="https://github.com/zulfikar4568/PCI.SafetyTestService/actions/workflows/dotnet.yml/badge.svg" />
+  <a href="https://github.com/zulfikar4568/PCI.SafetyTestService/releases/latest"><img src="https://img.shields.io/github/release/zulfikar4568/PCI.SafetyTestService.svg" /></a>
+  <a href="https://github.com/zulfikar4568/PCI.SafetyTestService/blob/master/LICENSE"><img src="https://img.shields.io/github/license/zulfikar4568/PCI.SafetyTestService.svg" /></a>
+</h1>
 
 # Change the Config of the Application
 Edit the hosts in your `Endpoints.config`
