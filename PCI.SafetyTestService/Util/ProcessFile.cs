@@ -12,11 +12,23 @@ namespace PCI.SafetyTestService.Util
 {
     public interface IProcessFile
     {
+        void CheckAndCreateDirectory(string sourceFolder);
         bool BackupTheFile(string sourceFiles, string destinationFiles);
         bool MoveTheFile(string sourceFiles, string destinationFiles);
     }
     public class ProcessFile  : IProcessFile
     {
+        public void CheckAndCreateDirectory(string sourceFolder)
+        {
+            if (!Directory.Exists(sourceFolder))
+            {
+                bool status = Directory.CreateDirectory(sourceFolder).Exists;
+                if (status) EventLogUtil.LogEvent($"Folder {sourceFolder} created successfully!", System.Diagnostics.EventLogEntryType.Information, 3);
+            } else
+            {
+                EventLogUtil.LogEvent($"Folder {sourceFolder} alredy exists!", System.Diagnostics.EventLogEntryType.Information, 3);
+            }
+        }
         public bool BackupTheFile(string sourceFiles, string destinationFiles)
         {
             if (!File.Exists(sourceFiles))
