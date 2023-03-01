@@ -16,7 +16,7 @@ call :ColorText 0b "                                                 Copyright(c
 echo(
 call :ColorText 2F "======================================================================================================================="
 echo(
-call :ColorText 0a "Searching Folder of ExCoreServiceOrder=" && <nul set /p=%~dp0%ServiceLocation%
+call :ColorText 0a "Searching Folder of PCI.SafetyTestService=" && <nul set /p=%~dp0%ServiceLocation%
 echo(
 IF EXIST %~dp0%ServiceLocation%\NUL (
   call :ColorText 0e "                                             Folder found" && <nul set /p=":)"
