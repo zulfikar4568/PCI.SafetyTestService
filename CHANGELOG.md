@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.1.0"></a>
+## [1.1.0](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.1.0) (2023-3-1)
+
+### Features
+
+* installer script ([2c67bc9](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/2c67bc990d620650b46ccff42ce0e4e25482a06f))
+
+### Bug Fixes
+
+* directory initialization ([8c42586](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/8c42586c00323d00b6f577fc739a221e7f42d35b))
+* title folder ([1547ae9](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/1547ae98a4872aa09b3e4dacee132ad3e46312a6))
+
 <a name="1.0.0"></a>
 ## [1.0.0](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.0.0) (2023-2-28)
 
