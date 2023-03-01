@@ -21,6 +21,10 @@ namespace PCI.SafetyTestService
             var containerBuilder = DependendyInjectionBuilder(new ContainerBuilder());
             var container = containerBuilder.Build();
 
+            // Folder Initialization
+            var processFile = container.Resolve<IProcessFile>();
+            InitializationFolder(processFile);
+
             #if DEBUG
                 Console.WriteLine("Start TopSelf");
             #endif
@@ -56,6 +60,15 @@ namespace PCI.SafetyTestService
             containerBuilder.RegisterType<ServiceMain>().As<ServiceMain>();
 
             return containerBuilder;
+        }
+
+        private static void InitializationFolder(IProcessFile processFile)
+        {
+            string[] folders = { AppSettings.SourceFolderDailyCheck, AppSettings.TargetFolderDailyCheck, AppSettings.FailedFolderDailyCheck, AppSettings.TargetFolderSafetyTest, AppSettings.TargetFolderSafetyTest, AppSettings.FailedFolderSafetyTest };
+            foreach (var folder in folders)
+            {
+                processFile.CheckAndCreateDirectory(folder);
+            }
         }
     }
 }
