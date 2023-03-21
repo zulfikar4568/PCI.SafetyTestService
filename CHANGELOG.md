@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.1.1"></a>
+## [1.1.1](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.1.1) (2023-3-21)
+
+### Bug Fixes
+
+* bash script folder not found ([7bed8d4](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/7bed8d46132aba457fca1e31915bb1bc70b8fbae))
+* date script copy right ([6fbe190](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/6fbe190385e403aac95904378bd654922b904232))
+* initialization folder ([5b9d9f2](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/5b9d9f2c30ff4f3bcf3dfe9edee5f183671365d2))
+
+### Other
+
+* remove unused config ([c8ab03e](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/c8ab03e571c17be4a905829ae524b2a40ea04f5b))
+
 <a name="1.1.0"></a>
 ## [1.1.0](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.1.0) (2023-3-1)
 
