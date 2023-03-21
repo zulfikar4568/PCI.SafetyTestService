@@ -5,9 +5,6 @@ for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1)
   set "DEL=%%a"
 )
 
-:ForService
-@SET ServiceLocation=.\
-
 call :ColorText 0a "                                            Powered by M.Zulfikar Isnaen"
 echo(
 call :ColorText 0e "                                                Services installer"
@@ -16,19 +13,12 @@ call :ColorText 0b "                                                 Copyright(c
 echo(
 call :ColorText 2F "======================================================================================================================="
 echo(
-call :ColorText 0a "Searching Folder of PCI.SafetyTestService=" && <nul set /p=%~dp0%ServiceLocation%
+call :ColorText 0a "Current Directory=" && <nul set /p=%~dp0%
 echo(
-IF EXIST %~dp0%ServiceLocation%\NUL (
-  call :ColorText 0e "                                             Folder found" && <nul set /p=":)"
-  echo(
-  cd %~dp0%ServiceLocation%
-  PCI.SafetyTestService.exe install start
-  call :ColorText 0a "                                            Install Finished" && <nul set /p=":)"
-  echo(
-) else (
-  call :ColorText 0C "                                             Folder not found" && <nul set /p=":("
-  echo(
-)
+cd %~dp0%
+PCI.SafetyTestService.exe install start
+call :ColorText 0a "                                            Install Finished" && <nul set /p=":)"
+echo(
 @PAUSE
 
 goto :eof
