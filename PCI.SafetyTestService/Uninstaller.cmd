@@ -12,7 +12,7 @@ call :ColorText 0a "                                            Powered by M.Zul
 echo(
 call :ColorText 0e "                                                Services installer"
 echo(
-call :ColorText 0b "                                                 Copyright(c) 2022"
+call :ColorText 0b "                                                 Copyright(c) 2023"
 echo(
 call :ColorText 2F "======================================================================================================================="
 echo(
