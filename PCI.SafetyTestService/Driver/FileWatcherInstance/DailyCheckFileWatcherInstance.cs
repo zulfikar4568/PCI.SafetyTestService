@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PCI.SafetyTestService.Util;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,8 +10,9 @@ namespace PCI.SafetyTestService.Driver.FileWatcherInstance
 {
     public class DailyCheckFileWatcherInstance : BaseFileWatcherInstance
     {
-        public DailyCheckFileWatcherInstance(string path)
+        public DailyCheckFileWatcherInstance(string path, IProcessFile processFile)
         {
+            processFile.CheckAndCreateDirectory(path);
             Instance = new FileSystemWatcher(path);
         }
     }

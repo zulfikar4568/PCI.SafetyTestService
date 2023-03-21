@@ -12,8 +12,8 @@ namespace PCI.SafetyTestService.Driver
     {
         protected override void Load(ContainerBuilder moduleBuilder)
         {
-            moduleBuilder.RegisterInstance(new FileWatcherInstance.SafetyTestFileWatcherInstance(AppSettings.SourceFolderSafetyTest)).As<FileWatcherInstance.SafetyTestFileWatcherInstance>();
-            moduleBuilder.RegisterInstance(new FileWatcherInstance.DailyCheckFileWatcherInstance(AppSettings.SourceFolderDailyCheck)).As<FileWatcherInstance.DailyCheckFileWatcherInstance>();
+            moduleBuilder.RegisterInstance(new FileWatcherInstance.SafetyTestFileWatcherInstance(AppSettings.SourceFolderSafetyTest, new Util.ProcessFile())).As<FileWatcherInstance.SafetyTestFileWatcherInstance>();
+            moduleBuilder.RegisterInstance(new FileWatcherInstance.DailyCheckFileWatcherInstance(AppSettings.SourceFolderDailyCheck, new Util.ProcessFile())).As<FileWatcherInstance.DailyCheckFileWatcherInstance>();
 
             moduleBuilder.RegisterType<FileWatcher<UseCase.ISafetyTest, FileWatcherInstance.SafetyTestFileWatcherInstance>>().As<IFileWatcher<UseCase.ISafetyTest, FileWatcherInstance.SafetyTestFileWatcherInstance>>();
             moduleBuilder.RegisterType<FileWatcher<UseCase.IDailyCheck, FileWatcherInstance.DailyCheckFileWatcherInstance>>().As<IFileWatcher<UseCase.IDailyCheck, FileWatcherInstance.DailyCheckFileWatcherInstance>>();
