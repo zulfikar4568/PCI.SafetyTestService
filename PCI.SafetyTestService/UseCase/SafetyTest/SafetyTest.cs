@@ -112,13 +112,13 @@ namespace PCI.SafetyTestService.UseCase
             }
 
             dataCollection.Clear();
-            MovingFile(System.IO.Path.GetFileName(sourceFile));
+            MovingFile(System.IO.Path.GetFileName(sourceFile), data[0].Serial);
             if (!File.Exists(sourceFile)) _processFile.CreateEmtyCSVFile(sourceFile, new List<Entity.SafetyTest>());
         }
 
-        private void MovingFile(string fileName)
+        private void MovingFile(string fileName, string container)
         {
-            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.TargetFolderSafetyTest}\\[{DateTime.Now:MMddyyyyhhmmsstt}]_{fileName}");
+            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.TargetFolderSafetyTest}\\[{DateTime.Now:MMddyyyyhhmmsstt}]_{fileName}_{container}");
         }
     }
 }
