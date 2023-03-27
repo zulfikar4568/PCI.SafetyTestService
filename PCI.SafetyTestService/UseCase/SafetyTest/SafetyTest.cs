@@ -120,12 +120,12 @@ namespace PCI.SafetyTestService.UseCase
 
         private void MovingFileSuccess(string fileName, string container)
         {
-            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.TargetFolderSafetyTest}\\[{DateTime.Now:MMddyyyyhhmmsstt}]_{fileName}_{container}");
+            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.TargetFolderSafetyTest}\\[{DateTime.Now:MMddyyyyhhmmsstt}]_{container}_{fileName}");
         }
 
         private void MovingFileFailed(string fileName, string container)
         {
-            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.FailedFolderSafetyTest}\\FAILED_[{DateTime.Now:MMddyyyyhhmmsstt}]_{fileName}_{container}");
+            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.FailedFolderSafetyTest}\\FAILED_[{DateTime.Now:MMddyyyyhhmmsstt}]_{container}_{fileName}");
         }
     }
 }
