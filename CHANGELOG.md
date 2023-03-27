@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.1.3"></a>
+## [1.1.3](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.1.3) (2023-3-27)
+
+### Bug Fixes
+
+* naming file safety test ([da5a105](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/da5a105a7111ce572127d717fdceb5cf6a53cf5b))
+
+### Other
+
+* fixed name file ([4b91c5a](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/4b91c5ac429a932eaf2ddccce628cab9ac7af10d))
+
 <a name="1.1.2"></a>
 ## [1.1.2](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.1.2) (2023-3-27)
 
