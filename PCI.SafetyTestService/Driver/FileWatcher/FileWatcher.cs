@@ -18,7 +18,6 @@ namespace PCI.SafetyTestService.Driver
     {
         private readonly F _watcher;
         private readonly T _usecase;
-        private bool _status = true;
 
         public FileWatcher(F watcher, T usecase)
         {
@@ -52,11 +51,9 @@ namespace PCI.SafetyTestService.Driver
                 Console.WriteLine($"Changed: {e.FullPath}");
             #endif
             EventLogUtil.LogEvent($"Changed: {e.FullPath}", System.Diagnostics.EventLogEntryType.Information);
-            if (_status) 
-            {
-                _status = false;
-                _status = _usecase.MainLogic(",", e.FullPath); 
-            }
+            _watcher.Instance.EnableRaisingEvents = false;
+            _usecase.MainLogic(",", e.FullPath);
+            _watcher.Instance.EnableRaisingEvents = true;
         }
 
         private void OnCreated(object sender, FileSystemEventArgs e)
