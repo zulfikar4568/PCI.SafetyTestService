@@ -41,6 +41,13 @@ namespace PCI.SafetyTestService.Config
                 return ConfigurationManager.AppSettings["FailedFolderSafetyTest"];
             }
         }
+        public static string SafetyTestFileName
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["SafetyTestFileName"];
+            }
+        }
 
         public static string SourceFolderDailyCheck
         {
@@ -61,6 +68,13 @@ namespace PCI.SafetyTestService.Config
             get
             {
                 return ConfigurationManager.AppSettings["FailedFolderDailyCheck"];
+            }
+        }
+        public static string DailyCheckFileName
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["DailyCheckFileName"];
             }
         }
 

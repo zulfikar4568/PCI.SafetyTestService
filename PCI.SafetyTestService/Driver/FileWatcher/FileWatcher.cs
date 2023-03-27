@@ -40,7 +40,7 @@ namespace PCI.SafetyTestService.Driver
             _watcher.Instance.Renamed += OnRenamed;
             _watcher.Instance.Error += OnError;
 
-            _watcher.Instance.Filter = "*.csv";
+            _watcher.Instance.Filter = _watcher.patternFile();
             _watcher.Instance.EnableRaisingEvents = true;
         }
         public void Exit()

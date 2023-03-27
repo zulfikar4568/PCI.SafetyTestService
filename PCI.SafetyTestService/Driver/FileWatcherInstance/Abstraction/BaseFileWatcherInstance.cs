@@ -10,5 +10,6 @@ namespace PCI.SafetyTestService.Driver.FileWatcherInstance
     public abstract class BaseFileWatcherInstance
     {
         public FileSystemWatcher Instance;
+        public abstract string patternFile();
     }
 }

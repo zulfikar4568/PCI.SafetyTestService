@@ -1,4 +1,5 @@
-﻿using PCI.SafetyTestService.Util;
+﻿using PCI.SafetyTestService.Config;
+using PCI.SafetyTestService.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,10 @@ namespace PCI.SafetyTestService.Driver.FileWatcherInstance
         {
             processFile.CheckAndCreateDirectory(path);
             Instance = new FileSystemWatcher(path);
+        }
+        public override string patternFile()
+        {
+            return AppSettings.SafetyTestFileName is null || AppSettings.SafetyTestFileName == "" ? AppSettings.SafetyTestFileName : ".csv";
         }
     }
 }
