@@ -26,7 +26,14 @@ namespace PCI.SafetyTestService.Driver
         }
         public void Init()
         {
-            _watcher.Instance.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName;
+            _watcher.Instance.NotifyFilter = NotifyFilters.Attributes
+                                 | NotifyFilters.CreationTime
+                                 | NotifyFilters.DirectoryName
+                                 | NotifyFilters.FileName
+                                 | NotifyFilters.LastAccess
+                                 | NotifyFilters.LastWrite
+                                 | NotifyFilters.Security
+                                 | NotifyFilters.Size;
             _watcher.Instance.Changed += OnChanged;
             _watcher.Instance.Created += OnCreated;
             _watcher.Instance.Deleted += OnDeleted;
