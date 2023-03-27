@@ -41,7 +41,6 @@ namespace PCI.SafetyTestService.Driver
             _watcher.Instance.Error += OnError;
 
             _watcher.Instance.Filter = "*.csv";
-            _watcher.Instance.IncludeSubdirectories = true;
             _watcher.Instance.EnableRaisingEvents = true;
         }
         public void Exit()
@@ -59,7 +58,9 @@ namespace PCI.SafetyTestService.Driver
                 Console.WriteLine($"Changed: {e.FullPath}");
             #endif
             EventLogUtil.LogEvent($"Changed: {e.FullPath}", System.Diagnostics.EventLogEntryType.Information);
+            _watcher.Instance.EnableRaisingEvents = false;
             _usecase.MainLogic(",", e.FullPath);
+            _watcher.Instance.EnableRaisingEvents = true;
         }
 
         private void OnCreated(object sender, FileSystemEventArgs e)

@@ -34,6 +34,7 @@ namespace PCI.SafetyTestService.Driver.Opcenter
                 ResultStatus oResultStatus = oService.Load(oServiceObject, oServiceRequest, out oServiceResult);
 
                 EventLogUtil.LogEvent(oResultStatus.Message, System.Diagnostics.EventLogEntryType.Information, 3);
+                if (oServiceResult == null) return null;
                 if (oServiceResult.Value.ObjectChanges != null)
                 {
                     return oServiceResult.Value.ObjectChanges;

@@ -58,9 +58,11 @@ namespace PCI.SafetyTestService.Repository
         {
             List<DataPointDetails> result = new List<DataPointDetails>();
             var data = _maintenanceTransaction.GetUserDataCollectionDef(AppSettings.UserDataCollectionDailyCheckName, AppSettings.UserDataCollectionDailyCheckRevision);
-            foreach (var dataPoint in data.DataPoints)
-            {
-                result.Add(new DataPointDetails() { DataName = dataPoint.Name.ToString(), DataType = dataPoint.DataType });
+            if (data != null) {
+                foreach (var dataPoint in data.DataPoints)
+                {
+                    result.Add(new DataPointDetails() { DataName = dataPoint.Name.ToString(), DataType = dataPoint.DataType });
+                }
             }
             return result.ToArray();
         }

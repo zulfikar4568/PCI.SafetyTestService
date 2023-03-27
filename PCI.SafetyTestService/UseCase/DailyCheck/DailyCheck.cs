@@ -5,6 +5,7 @@ using PCI.SafetyTestService.Util;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -46,6 +47,7 @@ namespace PCI.SafetyTestService.UseCase
         {
             List<Entity.DailyCheck> data = _repository.Reading(delimiter, sourceFile);
             DataPointDetails[] dataPointModelling = _repository.GetDataCollectionList();
+            if (dataPointModelling.Length == 0) MovingFileFailed(System.IO.Path.GetFileName(sourceFile));
 
             SortedDictionary<string, float> dataCollection = new SortedDictionary<string, float>();
             foreach (var item in data)
@@ -80,6 +82,7 @@ namespace PCI.SafetyTestService.UseCase
                         {
                             EventLogUtil.LogEvent("Retry Resource Data Collection x3", System.Diagnostics.EventLogEntryType.Information, 3);
                             result = _resourceTransaction.ExecuteCollectResourceData(AppSettings.ResourceName, AppSettings.UserDataCollectionDailyCheckName, AppSettings.UserDataCollectionDailyCheckRevision, dataPointModelling);
+                            if (!result) MovingFileFailed(System.IO.Path.GetFileName(sourceFile));
                         }
                     }
                     if (result) EventLogUtil.LogEvent("Success when doing Transaction Resource Data Collection");
@@ -98,12 +101,18 @@ namespace PCI.SafetyTestService.UseCase
 
             // Logic Opcenter must be in here
             dataCollection.Clear();
-            MovingFile(System.IO.Path.GetFileName(sourceFile));
+            MovingFileSuccess(System.IO.Path.GetFileName(sourceFile));
+            if (!File.Exists(sourceFile)) _processFile.CreateEmtyCSVFile(sourceFile, new List<Entity.DailyCheck>());
         }
 
-        private void MovingFile(string fileName)
+        private void MovingFileSuccess(string fileName)
         {
             _processFile.MoveTheFile($"{AppSettings.SourceFolderDailyCheck}\\{fileName}", $"{AppSettings.TargetFolderDailyCheck}\\[{DateTime.Now:MMddyyyyhhmmsstt}]_{fileName}");
+        }
+
+        private void MovingFileFailed(string fileName)
+        {
+            _processFile.MoveTheFile($"{AppSettings.SourceFolderDailyCheck}\\{fileName}", $"{AppSettings.FailedFolderDailyCheck}\\FAILED_[{DateTime.Now:MMddyyyyhhmmsstt}]_{fileName}");
         }
     }
 }
