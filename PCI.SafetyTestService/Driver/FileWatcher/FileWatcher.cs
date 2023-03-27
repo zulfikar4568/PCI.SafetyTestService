@@ -18,6 +18,7 @@ namespace PCI.SafetyTestService.Driver
     {
         private readonly F _watcher;
         private readonly T _usecase;
+        private bool _status = true;
 
         public FileWatcher(F watcher, T usecase)
         {
@@ -26,14 +27,7 @@ namespace PCI.SafetyTestService.Driver
         }
         public void Init()
         {
-            _watcher.Instance.NotifyFilter = NotifyFilters.Attributes
-                                 | NotifyFilters.CreationTime
-                                 | NotifyFilters.DirectoryName
-                                 | NotifyFilters.FileName
-                                 | NotifyFilters.LastAccess
-                                 | NotifyFilters.LastWrite
-                                 | NotifyFilters.Security
-                                 | NotifyFilters.Size;
+            _watcher.Instance.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName;
             _watcher.Instance.Changed += OnChanged;
             _watcher.Instance.Created += OnCreated;
             _watcher.Instance.Deleted += OnDeleted;
@@ -41,7 +35,6 @@ namespace PCI.SafetyTestService.Driver
             _watcher.Instance.Error += OnError;
 
             _watcher.Instance.Filter = "*.csv";
-            _watcher.Instance.IncludeSubdirectories = true;
             _watcher.Instance.EnableRaisingEvents = true;
         }
         public void Exit()
@@ -59,7 +52,11 @@ namespace PCI.SafetyTestService.Driver
                 Console.WriteLine($"Changed: {e.FullPath}");
             #endif
             EventLogUtil.LogEvent($"Changed: {e.FullPath}", System.Diagnostics.EventLogEntryType.Information);
-            _usecase.MainLogic(",", e.FullPath);
+            if (_status) 
+            {
+                _status = false;
+                _status = _usecase.MainLogic(",", e.FullPath); 
+            }
         }
 
         private void OnCreated(object sender, FileSystemEventArgs e)

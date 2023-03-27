@@ -8,6 +8,6 @@ namespace PCI.SafetyTestService.UseCase.Abstraction
 {
     public interface IUseCase
     {
-        void MainLogic(string delimiter, string sourceFile);
+        bool MainLogic(string delimiter, string sourceFile);
     }
 }

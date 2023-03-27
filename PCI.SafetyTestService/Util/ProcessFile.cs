@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Camstar.WCF.ObjectStack;
+using CsvHelper;
 using PCI.SafetyTestService.Config;
 using PCI.SafetyTestService.Util;
 
@@ -12,6 +15,7 @@ namespace PCI.SafetyTestService.Util
 {
     public interface IProcessFile
     {
+        void CreateEmtyCSVFile<T>(string defaultFileName, List<T> records);
         void CheckAndCreateDirectory(string sourceFolder);
         bool BackupTheFile(string sourceFiles, string destinationFiles);
         bool MoveTheFile(string sourceFiles, string destinationFiles);
@@ -47,6 +51,14 @@ namespace PCI.SafetyTestService.Util
             }
 
             return true;
+        }
+        public void CreateEmtyCSVFile<T>(string sourceFile,List<T> records)
+        {
+            using (var writer = new StreamWriter(sourceFile))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(records);
+            }
         }
         public bool MoveTheFile(string sourceFiles, string destinationFiles)
         {

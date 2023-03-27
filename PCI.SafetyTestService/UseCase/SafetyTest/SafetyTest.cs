@@ -6,6 +6,7 @@ using PCI.SafetyTestService.Util;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -16,7 +17,7 @@ namespace PCI.SafetyTestService.UseCase
 {
     public interface ISafetyTest : Abstraction.IUseCase
     {
-        new void MainLogic(string delimiter, string sourceFile);
+        new bool MainLogic(string delimiter, string sourceFile);
     }
     public class SafetyTest : ISafetyTest
     {
@@ -43,7 +44,7 @@ namespace PCI.SafetyTestService.UseCase
             }
         }
 
-        public void MainLogic(string delimiter, string sourceFile)
+        public bool MainLogic(string delimiter, string sourceFile)
         {
             List<Entity.SafetyTest> data = _repository.Reading(delimiter, sourceFile);
             DataPointDetails[] dataPointModelling = _repository.GetDataCollectionList();
@@ -112,6 +113,8 @@ namespace PCI.SafetyTestService.UseCase
 
             dataCollection.Clear();
             MovingFile(System.IO.Path.GetFileName(sourceFile));
+            if (!File.Exists(sourceFile)) _processFile.CreateEmtyCSVFile(sourceFile, new List<Entity.SafetyTest>());
+            return true;
         }
 
         private void MovingFile(string fileName)
