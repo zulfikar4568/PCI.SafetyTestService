@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.1.2"></a>
+## [1.1.2](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.1.2) (2023-3-27)
+
+### Bug Fixes
+
+* create new file ([a75a5f7](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/a75a5f7a8bd706d94e917ffc4524664adf3327b4))
+* moving file when failed txn MES ([cc0deb4](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/cc0deb4cf9ba7af76b97efee2a572909d6c5e08d))
+* notify filters ([a21d27b](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/a21d27b2cec1de17fa9e43d6ea74a7768ebfc5bf))
+* raise event ([64368ee](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/64368eead9c8c313d3550632c596201bcafb2790))
+* when data collection failed get, file move to failed ([63d4df3](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/63d4df38afa78b734bbb5117239d7a3beaf14155))
+
+### Other
+
+* Merge pull request #3 from zulfikar4568/fix/v1.1.1 ([f85061c](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/f85061c19e0215399fb4853ab850287b15bb868f))
+* add suffix container in safety test ([157a0d5](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/157a0d5b978e18c9057ac612b42cb2f3d0f387b5))
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.1.1) (2023-3-21)
 
