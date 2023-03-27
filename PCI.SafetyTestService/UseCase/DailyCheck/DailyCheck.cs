@@ -47,6 +47,7 @@ namespace PCI.SafetyTestService.UseCase
         {
             List<Entity.DailyCheck> data = _repository.Reading(delimiter, sourceFile);
             DataPointDetails[] dataPointModelling = _repository.GetDataCollectionList();
+            if (dataPointModelling.Length == 0) MovingFileFailed(System.IO.Path.GetFileName(sourceFile));
 
             SortedDictionary<string, float> dataCollection = new SortedDictionary<string, float>();
             foreach (var item in data)

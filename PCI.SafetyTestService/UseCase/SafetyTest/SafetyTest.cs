@@ -48,7 +48,8 @@ namespace PCI.SafetyTestService.UseCase
         {
             List<Entity.SafetyTest> data = _repository.Reading(delimiter, sourceFile);
             DataPointDetails[] dataPointModelling = _repository.GetDataCollectionList();
-            
+            if (dataPointModelling.Length == 0) MovingFileFailed(System.IO.Path.GetFileName(sourceFile), data[0].Serial);
+
             // Create Data Logic
             List<Entity.SafetyTest> groundTest = new List<Entity.SafetyTest>();
             SortedDictionary<string, float> dataCollection = new SortedDictionary<string, float>();
