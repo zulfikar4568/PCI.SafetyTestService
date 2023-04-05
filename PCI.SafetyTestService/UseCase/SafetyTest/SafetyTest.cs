@@ -84,29 +84,35 @@ namespace PCI.SafetyTestService.UseCase
             var serialNumber = System.IO.Path.GetFileNameWithoutExtension(sourceFile);
             var dataPointDetails = CombineDataPoint(GetLogValue(data), _repository.GetDataCollectionList());
 
-            try
+            if (dataPointDetails.Length > 0)
             {
-                bool result = _containerTransaction.ExecuteMoveStd(serialNumber, "", "", AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointDetails);
-                if (!result)
+                try
                 {
-                    EventLogUtil.LogEvent("Retry Move Std x2", System.Diagnostics.EventLogEntryType.Information, 3);
-                    result = _containerTransaction.ExecuteMoveStd(serialNumber, "", "", AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointDetails);
+                    bool result = _containerTransaction.ExecuteMoveStd(serialNumber, "", "", AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointDetails);
                     if (!result)
                     {
-                        EventLogUtil.LogEvent("Retry Move Std x3", System.Diagnostics.EventLogEntryType.Information, 3);
+                        EventLogUtil.LogEvent("Retry Move Std x2", System.Diagnostics.EventLogEntryType.Information, 3);
                         result = _containerTransaction.ExecuteMoveStd(serialNumber, "", "", AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointDetails);
-                        if (!result) MovingFileFailed(System.IO.Path.GetFileName(sourceFile), serialNumber);
+                        if (!result)
+                        {
+                            EventLogUtil.LogEvent("Retry Move Std x3", System.Diagnostics.EventLogEntryType.Information, 3);
+                            result = _containerTransaction.ExecuteMoveStd(serialNumber, "", "", AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointDetails);
+                            if (!result) MovingFileFailed(System.IO.Path.GetFileName(sourceFile), serialNumber);
+                        }
                     }
+                    if (result) EventLogUtil.LogEvent("Success when doing Transaction Move std");
                 }
-                if (result) EventLogUtil.LogEvent("Success when doing Transaction Move std");
-            }
-            catch (Exception ex)
+                catch (Exception ex)
+                {
+                    ex.Source = AppSettings.AssemblyName == ex.Source ? MethodBase.GetCurrentMethod().Name : MethodBase.GetCurrentMethod().Name + "." + ex.Source;
+                    EventLogUtil.LogErrorEvent(ex.Source, ex.Message);
+                }
+                MovingFileSuccess(System.IO.Path.GetFileName(sourceFile), serialNumber);
+            } else
             {
-                ex.Source = AppSettings.AssemblyName == ex.Source ? MethodBase.GetCurrentMethod().Name : MethodBase.GetCurrentMethod().Name + "." + ex.Source;
-                EventLogUtil.LogErrorEvent(ex.Source, ex.Message);
+                EventLogUtil.LogEvent("There's no data Model match!", System.Diagnostics.EventLogEntryType.Warning, 3);
+                MovingFileFailed(System.IO.Path.GetFileName(sourceFile), serialNumber);
             }
-
-            MovingFileSuccess(System.IO.Path.GetFileName(sourceFile), serialNumber);
         }
 
         private void MovingFileSuccess(string fileName, string container)
