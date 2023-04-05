@@ -1,4 +1,5 @@
-﻿using Camstar.WCF.ObjectStack;
+﻿using Camstar.Util;
+using Camstar.WCF.ObjectStack;
 using Camstar.WCF.Services;
 using PCI.SafetyTestService.Config;
 using PCI.SafetyTestService.Util;
@@ -110,6 +111,81 @@ namespace PCI.SafetyTestService.Repository.Opcenter
                 serviceObject.DataCollectionDef = new RevisionedObjectRef() { Name = DataCollectionName, Revision = DataCollectionRev, RevisionOfRecord = (DataCollectionRev == "") };
             }
             return _containerTxn.ContainerStatusInfo(serviceObject, ContainerName, IgnoreException);
+        }
+        public ContainerAttrDetail[] GetContainerAttrDetails(string ContainerName, bool IgnoreException = true)
+        {
+            ContainerAttrMaint_Info containerAttrInfo = new ContainerAttrMaint_Info();
+            containerAttrInfo.ServiceDetails = new ContainerAttrDetail_Info();
+
+            containerAttrInfo.ServiceDetails.Attribute = new Info(true);
+            containerAttrInfo.ServiceDetails.Name = new Info(true);
+            containerAttrInfo.ServiceDetails.DataType = new Info(true);
+            containerAttrInfo.ServiceDetails.AttributeValue = new Info(true);
+            containerAttrInfo.ServiceDetails.IsExpression = new Info(true);
+
+            return _containerTxn.GetContainerAttrDetails(containerAttrInfo, ContainerName, IgnoreException);
+        }
+        public bool ExecuteCollectData(string ContainerName, string DataCollectionName = "", string DataCollectionRev = "", DataPointDetails[] DataPoints = null, string Comments = "", bool IgnoreException = true)
+        {
+            CollectDataService service = new CollectDataService(AppSettings.ExCoreUserProfile);
+            CollectData serviceObject = new CollectData() { Container = new ContainerRef(ContainerName) };
+            if (DataPoints != null)
+            {
+                if (DataCollectionName != "")
+                {
+                    serviceObject.DataCollectionDef = new RevisionedObjectRef() { Name = DataCollectionName, Revision = DataCollectionRev, RevisionOfRecord = (DataCollectionRev == "") };
+                    serviceObject.ParametricData = _helper.SetDataPointSummary(serviceObject.DataCollectionDef, DataPoints);
+                }
+                else
+                {
+                    DataPointSummary oDataPointSummaryRef = _helper.GetDataPointSummaryRef(service, serviceObject, new CollectResourceData_Request(), new CollectResourceData_Info(), ref DataCollectionName, ref DataCollectionRev);
+                    serviceObject.ParametricData = _helper.SetDataPointSummary(oDataPointSummaryRef, DataPoints);
+                }
+            }
+
+            if (Comments != "") serviceObject.Comments = Comments;
+            return _containerTxn.CollectDataTxn(serviceObject, service, IgnoreException);
+        }
+        public bool ExecuteContainerAttrMaint(string ContainerName, ContainerAttrDetail[] Attributes, bool IgnoreException = true)
+        {
+            ContainerAttrMaintService service = new ContainerAttrMaintService(AppSettings.ExCoreUserProfile);
+            ContainerAttrMaint serviceObject = new ContainerAttrMaint() { Container = new ContainerRef(ContainerName) };
+            ContainerAttrDetail[] currentAttrs = GetContainerAttrDetails(ContainerName);
+            if (currentAttrs != null)
+            {
+                foreach (ContainerAttrDetail attr in Attributes)
+                {
+                    foreach (var currentAttr in currentAttrs)
+                    {
+                        if (attr.Name == currentAttr.Attribute.Name)
+                        {
+                            attr.Attribute = currentAttr.Attribute;
+                            break;
+                        }
+                    }
+                }
+                foreach (ContainerAttrDetail currentAttr in currentAttrs)
+                {
+                    bool bFoundAttr = false;
+                    foreach (ContainerAttrDetail oAttr in Attributes)
+                    {
+                        if (oAttr.Name == currentAttr.Name)
+                        {
+                            bFoundAttr = true;
+                            break;
+                        }
+                    }
+                    if (!bFoundAttr)
+                    {
+                        Array.Resize(ref Attributes, Attributes.Length + 1);
+                        Attributes[Attributes.Length - 1] = new ContainerAttrDetail() { Attribute = currentAttr.Attribute, Name = currentAttr.Name, DataType = currentAttr.DataType, AttributeValue = currentAttr.AttributeValue, IsExpression = currentAttr.IsExpression };
+                    }
+                }
+            }
+
+            serviceObject.ServiceDetails = Attributes;
+
+            return _containerTxn.ContainerAttrTxn(serviceObject, service, IgnoreException);
         }
     }
 }

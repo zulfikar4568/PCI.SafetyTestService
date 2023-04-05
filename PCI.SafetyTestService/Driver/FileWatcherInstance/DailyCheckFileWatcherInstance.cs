@@ -18,7 +18,7 @@ namespace PCI.SafetyTestService.Driver.FileWatcherInstance
         }
         public override string patternFile()
         {
-            return AppSettings.DailyCheckFileName is null || AppSettings.DailyCheckFileName == "" ? AppSettings.DailyCheckFileName : ".csv";
+            return AppSettings.DailyCheckFileName is null || AppSettings.DailyCheckFileName == "" ? "*.csv" : AppSettings.DailyCheckFileName;
         }
     }
 }
