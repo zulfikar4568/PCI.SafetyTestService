@@ -88,41 +88,41 @@ namespace PCI.SafetyTestService.UseCase
             {
                 try
                 {
-                    bool result = _containerTransaction.ExecuteMoveStd(serialNumber, "", "", AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointDetails);
+                    bool result = _containerTransaction.ExecuteCollectData(serialNumber, AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointDetails);
                     if (!result)
                     {
-                        EventLogUtil.LogEvent("Retry Move Std x2", System.Diagnostics.EventLogEntryType.Information, 3);
-                        result = _containerTransaction.ExecuteMoveStd(serialNumber, "", "", AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointDetails);
+                        EventLogUtil.LogEvent("Retry Collect Data x2", System.Diagnostics.EventLogEntryType.Information, 3);
+                        result = _containerTransaction.ExecuteCollectData(serialNumber, AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointDetails);
                         if (!result)
                         {
-                            EventLogUtil.LogEvent("Retry Move Std x3", System.Diagnostics.EventLogEntryType.Information, 3);
-                            result = _containerTransaction.ExecuteMoveStd(serialNumber, "", "", AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointDetails);
-                            if (!result) MovingFileFailed(System.IO.Path.GetFileName(sourceFile), serialNumber);
+                            EventLogUtil.LogEvent("Retry Collect Data x3", System.Diagnostics.EventLogEntryType.Information, 3);
+                            result = _containerTransaction.ExecuteCollectData(serialNumber, AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointDetails);
+                            if (!result) MovingFileFailed(System.IO.Path.GetFileName(sourceFile));
                         }
                     }
-                    if (result) EventLogUtil.LogEvent("Success when doing Transaction Move std");
+                    if (result) EventLogUtil.LogEvent("Success when doing Transaction Collect Data");
                 }
                 catch (Exception ex)
                 {
                     ex.Source = AppSettings.AssemblyName == ex.Source ? MethodBase.GetCurrentMethod().Name : MethodBase.GetCurrentMethod().Name + "." + ex.Source;
                     EventLogUtil.LogErrorEvent(ex.Source, ex.Message);
                 }
-                MovingFileSuccess(System.IO.Path.GetFileName(sourceFile), serialNumber);
+                MovingFileSuccess(System.IO.Path.GetFileName(sourceFile));
             } else
             {
                 EventLogUtil.LogEvent("There's no data Model match!", System.Diagnostics.EventLogEntryType.Warning, 3);
-                MovingFileFailed(System.IO.Path.GetFileName(sourceFile), serialNumber);
+                MovingFileFailed(System.IO.Path.GetFileName(sourceFile));
             }
         }
 
-        private void MovingFileSuccess(string fileName, string container)
+        private void MovingFileSuccess(string fileName)
         {
-            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.TargetFolderSafetyTest}\\[{DateTime.Now:MMddyyyyhhmmsstt}]_{container}_{fileName}");
+            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.TargetFolderSafetyTest}\\[{DateTime.Now:MMddyyyyhhmmsstt}]_{fileName}");
         }
 
-        private void MovingFileFailed(string fileName, string container)
+        private void MovingFileFailed(string fileName)
         {
-            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.FailedFolderSafetyTest}\\FAILED_[{DateTime.Now:MMddyyyyhhmmsstt}]_{container}_{fileName}");
+            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.FailedFolderSafetyTest}\\FAILED_[{DateTime.Now:MMddyyyyhhmmsstt}]_{fileName}");
         }
     }
 }
