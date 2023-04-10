@@ -18,7 +18,7 @@ namespace PCI.SafetyTestService.Driver.FileWatcherInstance
         }
         public override string patternFile()
         {
-            return AppSettings.SafetyTestFileName is null || AppSettings.SafetyTestFileName == "" ? AppSettings.SafetyTestFileName : ".csv";
+            return "*.csv";
         }
     }
 }

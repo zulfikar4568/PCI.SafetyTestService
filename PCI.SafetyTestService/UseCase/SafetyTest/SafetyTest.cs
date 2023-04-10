@@ -6,6 +6,7 @@ using PCI.SafetyTestService.Util;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -44,88 +45,84 @@ namespace PCI.SafetyTestService.UseCase
             }
         }
 
+        public Dictionary<int, float> GetLogValue(List<Entity.SafetyTest> CompletedData)
+        {
+            Dictionary<int, float> results = new Dictionary<int, float>();
+            if (CompletedData.Count > 0)
+            {
+                foreach (var data in CompletedData)
+                {
+                    bool validateKey = int.TryParse(data.Step, out int isKeyOk);
+                    bool validateValue = float.TryParse(data.Value, out float isValueOk);
+                    if (data.Value != null && data.Value != "" &&  validateKey && validateValue)
+                    {
+                        results.Add(isKeyOk, isValueOk);
+                    }
+                }
+            }
+            return results;
+        }
+
+        private DataPointDetails[] CombineDataPoint(Dictionary<int, float> LogValue, Dictionary<int, DataPointDetails> ModellingValue)
+        {
+            List<DataPointDetails> dataPointDetails = new List<DataPointDetails>();
+            foreach (KeyValuePair<int, DataPointDetails> dataModel in ModellingValue)
+            {
+                if (LogValue.ContainsKey(dataModel.Key))
+                {
+                    var dataFill = dataModel.Value;
+                    dataFill.DataValue = LogValue[dataModel.Key].ToString();
+                    dataPointDetails.Add(dataFill);
+                }
+            }
+            return dataPointDetails.ToArray();
+        }
+
         public void MainLogic(string delimiter, string sourceFile)
         {
             List<Entity.SafetyTest> data = _repository.Reading(delimiter, sourceFile);
-            DataPointDetails[] dataPointModelling = _repository.GetDataCollectionList();
-            if (dataPointModelling.Length == 0) MovingFileFailed(System.IO.Path.GetFileName(sourceFile), data[0].Serial);
+            var serialNumber = System.IO.Path.GetFileNameWithoutExtension(sourceFile);
+            var dataPointDetails = CombineDataPoint(GetLogValue(data), _repository.GetDataCollectionList());
 
-            // Create Data Logic
-            List<Entity.SafetyTest> groundTest = new List<Entity.SafetyTest>();
-            SortedDictionary<string, float> dataCollection = new SortedDictionary<string, float>();
-            foreach (var item in data)
+            if (dataPointDetails.Length > 0)
             {
-                if (int.Parse(item.Step) >= 1 && int.Parse(item.Step) <= 5)
-                {
-                    groundTest.Add(item);
-                } else if (int.Parse(item.Step) > 5 && int.Parse(item.Step) != 20 && int.Parse(item.Step) != 47)
-                {
-                    dataCollection.Add(item.Step, FilterTheValue(item.DataResult));
-                }
-            }
-            if (groundTest.Count != 0)
-            { 
-                Entity.SafetyTest groundMax = groundTest.OrderByDescending((x) => x.DataResult).First();
-                if (groundMax != null) dataCollection.Add(groundMax.Step, FilterTheValue(groundMax.DataResult));
-            }
-
-
-            // Modify the Data Point Object and send 
-            if (dataPointModelling.Length == dataCollection.Count)
-            {
-                int index = 0;
-                foreach (var dat in dataCollection)
-                {
-                    if (dataPointModelling[index] != null)
-                    {
-                        dataPointModelling[index].DataValue = dat.Value.ToString();
-                        #if DEBUG
-                            Console.WriteLine("Key: {0}, Value: {1}", dataPointModelling[index].DataName, dataPointModelling[index].DataValue);
-                        #endif
-                    }
-                    index++;
-                }
-
                 try
                 {
-                    bool result = _containerTransaction.ExecuteMoveStd(data[0].Serial, "", "", AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointModelling);
+                    bool result = _containerTransaction.ExecuteCollectData(serialNumber, AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointDetails);
                     if (!result)
                     {
-                        EventLogUtil.LogEvent("Retry Move Std x2", System.Diagnostics.EventLogEntryType.Information, 3);
-                        result = _containerTransaction.ExecuteMoveStd(data[0].Serial, "", "", AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointModelling);
+                        EventLogUtil.LogEvent("Retry Collect Data x2", System.Diagnostics.EventLogEntryType.Information, 3);
+                        result = _containerTransaction.ExecuteCollectData(serialNumber, AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointDetails);
                         if (!result)
                         {
-                            EventLogUtil.LogEvent("Retry Move Std x3", System.Diagnostics.EventLogEntryType.Information, 3);
-                            result = _containerTransaction.ExecuteMoveStd(data[0].Serial, "", "", AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointModelling);
-                            if (!result) MovingFileFailed(System.IO.Path.GetFileName(sourceFile), data[0].Serial);
+                            EventLogUtil.LogEvent("Retry Collect Data x3", System.Diagnostics.EventLogEntryType.Information, 3);
+                            result = _containerTransaction.ExecuteCollectData(serialNumber, AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision, dataPointDetails);
+                            if (!result) MovingFileFailed(System.IO.Path.GetFileName(sourceFile));
                         }
                     }
-                    if (result) EventLogUtil.LogEvent("Success when doing Transaction Move std");
+                    if (result) EventLogUtil.LogEvent("Success when doing Transaction Collect Data");
                 }
                 catch (Exception ex)
                 {
                     ex.Source = AppSettings.AssemblyName == ex.Source ? MethodBase.GetCurrentMethod().Name : MethodBase.GetCurrentMethod().Name + "." + ex.Source;
                     EventLogUtil.LogErrorEvent(ex.Source, ex.Message);
                 }
-                
+                MovingFileSuccess(System.IO.Path.GetFileName(sourceFile));
             } else
             {
-                EventLogUtil.LogEvent("The Sending MoveStd was cancelled, because the Configuration Modelling is different with the Csv file", System.Diagnostics.EventLogEntryType.Warning, 3);
+                EventLogUtil.LogEvent("There's no data Model match!", System.Diagnostics.EventLogEntryType.Warning, 3);
+                MovingFileFailed(System.IO.Path.GetFileName(sourceFile));
             }
-
-            dataCollection.Clear();
-            MovingFileSuccess(System.IO.Path.GetFileName(sourceFile), data[0].Serial);
-            if (!File.Exists(sourceFile)) _processFile.CreateEmtyCSVFile(sourceFile, new List<Entity.SafetyTest>());
         }
 
-        private void MovingFileSuccess(string fileName, string container)
+        private void MovingFileSuccess(string fileName)
         {
-            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.TargetFolderSafetyTest}\\[{DateTime.Now:MMddyyyyhhmmsstt}]_{container}_{fileName}");
+            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.TargetFolderSafetyTest}\\[{DateTime.Now:MMddyyyyhhmmsstt}]_{fileName}");
         }
 
-        private void MovingFileFailed(string fileName, string container)
+        private void MovingFileFailed(string fileName)
         {
-            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.FailedFolderSafetyTest}\\FAILED_[{DateTime.Now:MMddyyyyhhmmsstt}]_{container}_{fileName}");
+            _processFile.MoveTheFile($"{AppSettings.SourceFolderSafetyTest}\\{fileName}", $"{AppSettings.FailedFolderSafetyTest}\\FAILED_[{DateTime.Now:MMddyyyyhhmmsstt}]_{fileName}");
         }
     }
 }

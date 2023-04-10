@@ -5,6 +5,16 @@
   <a href="https://github.com/zulfikar4568/PCI.SafetyTestService/blob/master/LICENSE"><img src="https://img.shields.io/github/license/zulfikar4568/PCI.SafetyTestService.svg" /></a>
 </h1>
 
+# Some Notes
+```
+There's no interlock beetwen tester and MES, let records depend on how many tester doing the test (Actual whether 3x test even more), and operator click Complete if result is pass, and click Rework Request if result is fail (Let Operator will aknowledge that container moved to the Image Test or to rework).
+
+Suggestion: Don't define retest in flow in MES, because: 
+1. Safety Test Service cannot give notification to the Portal, if move the container automatically by service
+2. There's no interlock and if operator not realized that container already move to Image Test, and operator doing test again, value will not recorded in MES!.
+3. If there's changes of flow, service must be change as well because service need to decide the path whether pass or fail (Flexibility).
+```
+
 # Change the Config of the Application
 Edit the hosts in your `Endpoints.config`
 ```config

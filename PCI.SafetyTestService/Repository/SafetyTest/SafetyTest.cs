@@ -6,6 +6,7 @@ using PCI.SafetyTestService.Entity;
 using PCI.SafetyTestService.Repository.Opcenter;
 using PCI.SafetyTestService.Util;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -19,7 +20,7 @@ namespace PCI.SafetyTestService.Repository
     public interface ISafetyTest
     {
         List<Entity.SafetyTest> Reading(string delimiter, string sourceFile);
-        DataPointDetails[] GetDataCollectionList();
+        Dictionary<int, DataPointDetails> GetDataCollectionList();
     }
     public class SafetyTest : ISafetyTest
     {
@@ -56,15 +57,22 @@ namespace PCI.SafetyTestService.Repository
             return result;
         }
 
-        public DataPointDetails[] GetDataCollectionList()
+        public Dictionary<int, DataPointDetails> GetDataCollectionList()
         {
-            List<DataPointDetails> result = new List<DataPointDetails>();
+            Dictionary<int, DataPointDetails> results = new Dictionary<int, DataPointDetails>();
             var data = _maintenanceTransaction.GetUserDataCollectionDef(AppSettings.UserDataCollectionSafetyTestName, AppSettings.UserDataCollectionSafetyTestRevision);
-            foreach (var dataPoint in data.DataPoints)
+            if (data != null)
             {
-                result.Add(new DataPointDetails() { DataName = dataPoint.Name.ToString() , DataType = dataPoint.DataType});
+                foreach (var dataPoint in data.DataPoints)
+                {
+                    bool validateKey = int.TryParse(dataPoint.Name.ToString().Split('|')[0], out int isKeyOk);
+                    if (validateKey)
+                    {
+                        results.Add(isKeyOk, new DataPointDetails() { DataName = dataPoint.Name.ToString(), DataType = dataPoint.DataType });
+                    }
+                }
             }
-            return result.ToArray();
+            return results;
         }
     }
 }
