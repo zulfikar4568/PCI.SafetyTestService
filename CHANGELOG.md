@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.2.0"></a>
+## [1.2.0](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.2.0) (2023-4-10)
+
+### Features
+
+* change to collect data ([a7cf831](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/a7cf831bdbf5cfa4ab4d2b41df13ad83b3f57395))
+* new model of csv safety test ([1163e19](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/1163e19828a096ebe71eeb6a13ca4b484dc2d57c))
+
+### Bug Fixes
+
+* data model must exists ([ed09d9f](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/ed09d9fbaabbda414b6b8b876a4d2c72666c2dbd))
+
+### Other
+
+* Merge pull request #4 from zulfikar4568/feat/uat-1 ([60ca28d](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/60ca28d651a88ab4e20af4597e6d6e5a21ae61f9))
+* add notes on final rule ([3b78896](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/3b7889609687f176ba224e336694cfe726bb7e5a))
+
 <a name="1.1.3"></a>
 ## [1.1.3](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.1.3) (2023-3-27)
 
