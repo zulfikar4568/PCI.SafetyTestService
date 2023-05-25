@@ -45,6 +45,8 @@ namespace PCI.SafetyTestService.UseCase
 
         public void MainLogic(string delimiter, string sourceFile)
         {
+            if (!_processFile.IsFileExists(sourceFile)) return;
+
             List<Entity.DailyCheck> data = _repository.Reading(delimiter, sourceFile);
             DataPointDetails[] dataPointModelling = _repository.GetDataCollectionList();
             if (dataPointModelling.Length == 0) MovingFileFailed(System.IO.Path.GetFileName(sourceFile));

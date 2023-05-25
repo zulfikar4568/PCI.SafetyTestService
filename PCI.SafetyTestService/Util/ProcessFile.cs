@@ -15,6 +15,7 @@ namespace PCI.SafetyTestService.Util
 {
     public interface IProcessFile
     {
+        bool IsFileExists(string sourceFile);
         void CreateEmtyCSVFile<T>(string defaultFileName, List<T> records);
         void CheckAndCreateDirectory(string sourceFolder);
         bool BackupTheFile(string sourceFiles, string destinationFiles);
@@ -22,6 +23,10 @@ namespace PCI.SafetyTestService.Util
     }
     public class ProcessFile  : IProcessFile
     {
+        public bool IsFileExists(string sourceFile)
+        {
+            return File.Exists(sourceFile);
+        }
         public void CheckAndCreateDirectory(string sourceFolder)
         {
             if (!Directory.Exists(sourceFolder))

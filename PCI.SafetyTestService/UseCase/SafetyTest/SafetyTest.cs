@@ -80,6 +80,8 @@ namespace PCI.SafetyTestService.UseCase
 
         public void MainLogic(string delimiter, string sourceFile)
         {
+            if (!_processFile.IsFileExists(sourceFile)) return;
+
             List<Entity.SafetyTest> data = _repository.Reading(delimiter, sourceFile);
             var serialNumber = System.IO.Path.GetFileNameWithoutExtension(sourceFile);
             var dataPointDetails = CombineDataPoint(GetLogValue(data), _repository.GetDataCollectionList());
