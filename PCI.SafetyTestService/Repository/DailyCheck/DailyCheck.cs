@@ -36,6 +36,16 @@ namespace PCI.SafetyTestService.Repository
                 Delimiter = delimiter
             };
 
+            configuration.MissingFieldFound = (missingField) =>
+            {
+                EventLogUtil.LogEvent($"There's missing data field in column index {missingField.Index} {missingField.HeaderNames} was not found! you can ignore.", System.Diagnostics.EventLogEntryType.Warning, 6);
+            };
+
+            configuration.BadDataFound = (badData) =>
+            {
+                EventLogUtil.LogEvent($"Bad data at {badData.RawRecord}, {badData.Field}, {badData.Context}", System.Diagnostics.EventLogEntryType.Warning, 6);
+            };
+
             try
             {
 
