@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.2.2"></a>
+## [1.2.2](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.2.2) (2023-6-8)
+
+### Bug Fixes
+
+* when field missing ([78fcc00](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/78fcc004173d6cec1a2aa7ce86eb21a7f70424fd))
+
+### Other
+
+* Merge branch 'master' of https://github.com/zulfikar4568/PCI.SafetyTestService ([3b12606](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/3b12606100e6e1165c02d9896700bc2d2c73d934))
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.2.1) (2023-5-25)
 
