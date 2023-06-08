@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.2.1"></a>
+## [1.2.1](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.2.1) (2023-5-25)
+
+### Bug Fixes
+
+* when file doesn't exists! ([08f41ba](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/08f41ba7f7497e6ce65ea881005b684329611648))
+
 <a name="1.2.0"></a>
 ## [1.2.0](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.2.0) (2023-4-10)
 
