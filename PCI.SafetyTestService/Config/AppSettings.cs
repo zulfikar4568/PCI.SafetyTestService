@@ -178,5 +178,214 @@ namespace PCI.SafetyTestService.Config
             }
         }
         #endregion
+
+        #region CONFIG FIELD SAFETY TEST
+        public static int StepST
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["StepST"]);
+            }
+        }
+        public static int Value
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["Value"]);
+            }
+        }
+        #endregion
+
+        #region CONFIG FIELD DAILY CHECK
+        public static int StepDC
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["StepDC"]);
+            }
+        }
+        public static int TestType
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["TestType"]);
+            }
+        }
+        public static int ExpResult
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["ExpResult"]);
+            }
+        }
+        public static int InstrResult
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["InstrResult"]);
+            }
+        }
+        public static int FinalResult
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["FinalResult"]);
+            }
+        }
+        public static int Meter1
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["Meter1"]);
+            }
+        }
+        public static int DataResult
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["DataResult"]);
+            }
+        }
+        public static int Meter3
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["Meter3"]);
+            }
+        }
+        public static int Meter4
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["Meter4"]);
+            }
+        }
+        public static int Meter5
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["Meter5"]);
+            }
+        }
+        public static int Timer
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["Timer"]);
+            }
+        }
+        public static int StationName
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["StationName"]);
+            }
+        }
+        public static int User
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["User"]);
+            }
+        }
+        public static int Date
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["Date"]);
+            }
+        }
+        public static int Time
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["Time"]);
+            }
+        }
+        public static int DUTModel
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["DUTModel"]);
+            }
+        }
+        public static int Serial
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["Serial"]);
+            }
+        }
+        public static int InstrumentModel
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["InstrumentModel"]);
+            }
+        }
+        public static int InstrumentSerial
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["InstrumentSerial"]);
+            }
+        }
+        public static int FileType
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["FileType"]);
+            }
+        }
+        public static int CalibrationDueDate
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["CalibrationDueDate"]);
+            }
+        }
+        public static int Probe
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["Probe"]);
+            }
+        }
+        public static int MeasuringDevice
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["MeasuringDevice"]);
+            }
+        }
+        public static int PCFileName
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["PCFileName"]);
+            }
+        }
+        public static int InstrumentFileName
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["InstrumentFileName"]);
+            }
+        }
+        public static int File
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["File"]);
+            }
+        }
+        public static int TestStartTime
+        {
+            get
+            {
+                return Int32.Parse(ConfigurationManager.AppSettings["TestStartTime"]);
+            }
+        }
+        #endregion
     }
 }

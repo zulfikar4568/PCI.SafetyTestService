@@ -54,6 +54,7 @@ namespace PCI.SafetyTestService.Repository
                 using (var reader = new StreamReader(sourceFile))
                 using (var csv = new CsvReader(reader, configuration))
                 {
+                    csv.Context.RegisterClassMap<Entity.SafetyTestMap>();
                     var records = csv.GetRecords<Entity.SafetyTest>();
                     result = records.ToList();
                 }
