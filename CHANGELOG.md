@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.3.0"></a>
+## [1.3.0](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.3.0) (2023-6-20)
+
+### Features
+
+* add csv config ([61f7150](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/61f7150479a2e8f370df4d0880ec661f1cd9e769))
+
+### Other
+
+* **update:** v1.2.3 push to the AssemblyInfo.cs ([432639f](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/432639f3912ef5775f5fbfaa69eb3237db591d06))
+
 <a name="1.2.3"></a>
 ## [1.2.3](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.2.3) (2023-6-12)
 
