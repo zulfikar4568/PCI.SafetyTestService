@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="1.3.1"></a>
+## [1.3.1](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.3.1) (2023-6-26)
+
+### Bug Fixes
+
+* add log for debug ([7258744](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/7258744d48ed5baea6ee3a4df89c1244ec652287))
+
+### Other
+
+* Merge branch 'master' of https://github.com/zulfikar4568/PCI.SafetyTestService ([a9ee890](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/a9ee89010503f1db1fb83ac7da294647c7605ba8))
+* **update:** v1.3.0 push to the AssemblyInfo.cs ([5861157](https://www.github.com/zulfikar4568/PCI.SafetyTestService/commit/586115758ccf9eb824e59dcfe408e233284ed76a))
+
 <a name="1.3.0"></a>
 ## [1.3.0](https://www.github.com/zulfikar4568/PCI.SafetyTestService/releases/tag/v1.3.0) (2023-6-20)
 
