@@ -65,6 +65,9 @@ namespace PCI.SafetyTestService.Repository
                 EventLogUtil.LogErrorEvent(ex.Source, ex);
             }
 
+            // Try logging
+            EventLogUtil.LogEvent($"{System.IO.Path.GetFileName(sourceFile)} have {result.Count} data from CSV file!", System.Diagnostics.EventLogEntryType.Information, 6);
+
             return result;
         }
 
@@ -82,7 +85,15 @@ namespace PCI.SafetyTestService.Repository
                         results.Add(isKeyOk, new DataPointDetails() { DataName = dataPoint.Name.ToString(), DataType = dataPoint.DataType });
                     }
                 }
+                // Try logging
+                EventLogUtil.LogEvent($"User Data Collection Def {AppSettings.UserDataCollectionSafetyTestName} have: {data.DataPoints.Length} data from Opcenter!.\nAnd stored into dictionary: {results.Count} ", System.Diagnostics.EventLogEntryType.Information, 6);
+            } else
+            {
+                // Try logging
+                EventLogUtil.LogEvent($"There's no data can't be retrieve from opcenter!", System.Diagnostics.EventLogEntryType.Warning, 6);
             }
+
+
             return results;
         }
     }

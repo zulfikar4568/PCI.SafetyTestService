@@ -1,4 +1,5 @@
 ﻿using Camstar.WCF.ObjectStack;
+using Camstar.WCF.Services;
 using PCI.SafetyTestService.Config;
 using PCI.SafetyTestService.Entity;
 using PCI.SafetyTestService.Repository.Opcenter;
@@ -7,6 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -60,6 +62,10 @@ namespace PCI.SafetyTestService.UseCase
                     }
                 }
             }
+
+            // Try logging
+            EventLogUtil.LogEvent($"Data CSV stored into dictionary got {results.Count}!", EventLogEntryType.Information, 6);
+
             return results;
         }
 
@@ -75,6 +81,10 @@ namespace PCI.SafetyTestService.UseCase
                     dataPointDetails.Add(dataFill);
                 }
             }
+
+            // Try logging
+            EventLogUtil.LogEvent($"Combine data got {dataPointDetails.Count} combined and store in dictionary!", EventLogEntryType.Information, 6);
+
             return dataPointDetails.ToArray();
         }
 
